@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<article class="prose">
+<a href="{{ '/projects/' | relative_url }}">← All projects</a>
+<header class="page-heading"><p class="eyebrow">Project</p><h1>{{ page.title | escape }}</h1><p class="lede">{{ page.description | escape }}</p></header>
+{% if page.technologies %}<p class="muted">{{ page.technologies | join: ' · ' | escape }}</p>{% endif %}
+{{ content }}
+{% if page.repository %}<p><a href="{{ page.repository | escape }}">View source on GitHub</a></p>{% endif %}
+</article>
