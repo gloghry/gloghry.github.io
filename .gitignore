@@ -6,3 +6,7 @@ vendor/
 
 # Downloaded and verified by scripts/fetch_fonts.py
 /assets/fonts/*.woff2
+
+# Generated portrait and intrinsic dimensions
+/assets/images/garett.jpg
+/_data/portrait.yml

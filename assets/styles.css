@@ -93,3 +93,7 @@ img { max-width:100%; height:auto; }
 .site-footer { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:5rem; padding-block:2rem; border-top:1px solid var(--line); font-size:.9rem; color:var(--muted); }
 .site-footer span { margin-right:auto; }
 @media (max-width:600px) { .site-header { gap:1rem; padding-block:1.4rem; } .wordmark { flex-basis:100%; } nav { gap:1rem; } #theme-toggle { margin-left:auto; } .hero { padding-block:3rem; } .wrap { width:calc(100% - 2rem); } .page-heading { padding-top:2rem; } }
+
+.about-portrait { float:right; width:15rem; max-width:42%; height:auto; margin:.5rem 0 1.5rem 2rem; border:1px solid var(--line); border-radius:.5rem; image-orientation:from-image; }
+.prose::after { content:""; display:block; clear:both; }
+@media (max-width:600px) { .about-portrait { float:none; display:block; width:15rem; max-width:100%; margin:0 0 2rem; } }
