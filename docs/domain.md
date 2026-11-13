@@ -16,7 +16,13 @@ Open [repository Settings → Pages](https://github.com/gloghry/gloghry.github.i
 
 This repository publishes through a custom GitHub Actions workflow. GitHub's documentation says a source `CNAME` file is ignored for this workflow; the Pages dashboard setting is what connects the domain.
 
-## 3. Add DNS records
+## 3. Add DNS records in Porkbun
+
+Open Porkbun → Account → Domain Management. Find garettloghry.com, open Details, and use the edit control beside DNS Records (or hover over the domain and click DNS).
+
+Choose Add Record. For root A records leave Host blank; enter each IP in Answer/Value. For the CNAME use Host `www` and Answer `gloghry.github.io`. Keep the default TTL. Remove conflicting website parking records pointing to `pixie.porkbun.com`; preserve the GitHub verification TXT and any email records.
+
+Porkbun also offers Quick DNS Config → Github. If using that preset, set its additional CNAME Host to `www` and replace USERNAME in the answer with `gloghry`. Review the resulting records against the table below.
 
 In the DNS dashboard serving garettloghry.com, create these records. `@` means the root domain; some dashboards use an empty host or the full domain instead.
 
@@ -59,6 +65,8 @@ On a system with DNS tools, use `dig garettloghry.com A` and `dig www.garettlogh
 
 ## References
 
+- [Porkbun: connect a domain to GitHub Pages](https://kb.porkbun.com/article/64-how-to-connect-your-domain-to-github-pages)
+- [Porkbun: add A records (blank Host for the root)](https://kb.porkbun.com/article/54-how-to-manage-dns-records)
 - [GitHub: manage a custom domain](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
 - [GitHub: verify domain ownership](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages)
 - [GitHub: HTTPS](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https)
