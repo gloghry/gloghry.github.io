@@ -51,7 +51,9 @@ In repository Settings → Pages, select **GitHub Actions** as the source.
 
 Pull requests run regression tests, build Jekyll, and check internal links. They do not publish a preview or deploy the production site. Merging to `main` runs the same checks, uploads the generated `_site` artifact, and deploys through the `github-pages` environment. The workflow can also be started manually; deployment runs only for `main`.
 
-Repository rules require the `build` status check and a pull request; only squash merges are allowed. The `github-pages` environment may require approval depending on its settings. Confirm the Actions run and https://gloghry.github.io after deployment.
+Repository rules require the `build` status check and a pull request; only squash merges are allowed. The `github-pages` environment may require approval depending on its settings. Confirm the Actions run and https://garettloghry.com after deployment.
+
+The primary domain is garettloghry.com. Domain ownership, DNS records, the Pages custom-domain setting, and HTTPS must also be configured outside the repository; see [custom-domain setup](docs/domain.md). Changing `_config.yml` alone does not route the domain.
 
 ## Adding content
 

@@ -2,7 +2,7 @@
 
 I’m a software engineer at Hyster-Yale, interested in embedded systems, firmware, and understanding the machines my code interacts with. My work has taken me from embedded C for industrial vehicles to desktop tools for programming and troubleshooting their controllers.
 
-**[Visit my website →](https://gloghry.github.io)**
+**[Visit my website →](https://garettloghry.com)**
 
 ## Why I’m building this
 

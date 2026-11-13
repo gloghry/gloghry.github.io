@@ -11,7 +11,8 @@
 - Slate/teal themes; avoid hard-to-read dark blue, dark red, and magenta on dark backgrounds. Light neutral body and secondary text in dark mode.
 - Follow OS theme initially; remember explicit theme selection. Underline links and show keyboard focus.
 - GitHub-only contact for now. Public email alias/forwarding is under consideration; do not publish the email from the Vim file.
-- No analytics or custom domain initially.
+- Garett purchased garettloghry.com as the primary domain. DNS, Pages settings, HTTPS, and redirect verification are tracked in #21; see [domain setup](domain.md).
+- Analytics remain disabled.
 
 ## Content decisions still needed
 
