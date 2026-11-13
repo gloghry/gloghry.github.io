@@ -6,6 +6,12 @@ The site uses Jekyll 4.4 with feed and sitemap plugins. Run the commands below f
 
 Every change, including documentation and maintenance, needs a GitHub issue. Reuse an existing issue when it covers the work; otherwise create one before editing. Work on a dedicated branch such as `26-approachable-readme`, and reference the issue in the pull request. Include follow-up fixes on that branch when they belong to the same issue.
 
+### Priority and readiness
+
+Use the Work item issue form to select exactly one priority and explain why. Priorities are defined in [AGENTS.md](AGENTS.md#issue-priorities): P0 is highest priority, P1 near-term, P2 follow-up, and P3 optional exploration. Priority is separate from effort or whether an issue needs user input.
+
+For API-created issues, include a `## Priority` section with a P0–P3 value and short rationale. GitHub forms render the equivalent field under `### Priority`; both are accepted. Confirm dependencies and required input before starting, preserve existing priority decisions, and do not invent missing content to unblock work.
+
 ## Local setup
 
 Install Ruby 3.3, Bundler, and Python 3.9 or newer. Ruby 3.3 matches the version in [.github/workflows/pages.yml](.github/workflows/pages.yml); Python runs the link checker and its regression tests.

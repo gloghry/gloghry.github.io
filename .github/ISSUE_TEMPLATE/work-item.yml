@@ -1,0 +1,50 @@
+name: Work item
+description: Propose a change, report a problem, or track a decision.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Choose one priority and describe the work. Priority is separate from effort and readiness.
+        Keep private mailbox details, passwords, and other secrets out of public issues.
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Select the appropriate level; do not use priority to represent missing input.
+      multiple: false
+      options:
+        - P0 — Highest priority
+        - P1 — Near-term
+        - P2 — Follow-up
+        - P3 — Optional exploration
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Priority rationale
+      description: Why does this work belong at the selected priority?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Goal and scope
+      description: Describe the problem, desired outcome, and relevant examples.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List the observable outcomes needed to finish.
+      placeholder: "- [ ] Describe a completion check"
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and required input
+      description: Link prerequisites and say which decisions or materials are needed. Write none if there are none.
+    validations:
+      required: true
