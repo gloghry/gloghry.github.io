@@ -3,7 +3,7 @@ from pathlib import Path
 import struct
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "assets" / "Plandid.jpg"
+SOURCE = ROOT / "assets" / "images" / "originals" / "Plandid.jpg"
 OUTPUT = ROOT / "assets" / "images" / "garett.jpg"
 DIMENSIONS = ROOT / "_data" / "portrait.yml"
 
