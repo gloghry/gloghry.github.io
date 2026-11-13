@@ -3,11 +3,19 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
+const os = require('node:os');
 const { chromium, webkit } = require('playwright');
 const AxeBuilder = require('@axe-core/playwright').default;
 
-const base = 'http://127.0.0.1:4173';
-const output = path.resolve('audit-results');
+const origin = 'http://127.0.0.1:4173';
+const basePath = (process.env.SITE_BASEURL || '').replace(/\/+$/, '');
+const segments = basePath.split('/').filter(Boolean);
+assert(basePath === '' || (basePath.startsWith('/') && segments.length > 0 &&
+  segments.every(segment => /^[A-Za-z0-9._~-]+$/.test(segment) && segment !== '.' && segment !== '..')),
+  'SITE_BASEURL must be empty or an absolute URL path without dot segments');
+const base = origin + basePath;
+const siteDirectory = path.resolve(process.env.SITE_DIRECTORY || '_site');
+const output = path.resolve(process.env.AUDIT_OUTPUT_DIR || 'audit-results');
 const routes = ['/', '/about/', '/projects/', '/writing/', '/404.html'];
 const widths = [320, 390, 768, 1024, 1440];
 const results = [];
@@ -173,21 +181,36 @@ async function auditBrowser(browserType) {
 
 async function main() {
   await fs.mkdir(output, { recursive: true });
-  const server = spawn('python3', ['-m', 'http.server', '4173', '--bind', '127.0.0.1', '--directory', '_site'], { stdio: 'ignore' });
+  let temporaryRoot;
+  let server;
   try {
+    // baseurl changes emitted URLs, not Jekyll's destination directory.
+    // Mount that directory at the matching URL prefix for browser requests.
+    let serveDirectory = siteDirectory;
+    if (basePath) {
+      temporaryRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'site-browser-audit-'));
+      serveDirectory = temporaryRoot;
+      const mount = path.join(temporaryRoot, ...segments);
+      await fs.mkdir(path.dirname(mount), { recursive: true });
+      await fs.symlink(siteDirectory, mount, 'dir');
+    }
+    server = spawn('python3', ['-m', 'http.server', '4173', '--bind', '127.0.0.1',
+      '--directory', serveDirectory], { stdio: 'ignore' });
     let ready = false;
     for (let attempt = 0; attempt < 40; attempt++) {
-      try { ready = (await fetch(base)).ok; } catch (_) {}
+      try { ready = (await fetch(base + '/')).ok; } catch (_) {}
       if (ready) break;
       await delay(250);
     }
-    assert(ready, 'Generated-site server did not start');
+    assert(ready, 'Generated-site server did not start at ' + base + '/');
     for (const browser of [chromium, webkit]) await auditBrowser(browser);
   } finally {
-    server.kill();
-    await fs.writeFile(path.join(output, 'report.json'), JSON.stringify({ passed: results.length, failures, results }, null, 2));
+    if (server) server.kill();
+    if (temporaryRoot) await fs.rm(temporaryRoot, { recursive: true, force: true });
+    await fs.writeFile(path.join(output, 'report.json'),
+      JSON.stringify({ basePath, passed: results.length, failures, results }, null, 2));
   }
-  if (failures.length) throw new Error(failures.length + ' browser audit scenario(s) failed; see audit-results/report.json');
-  console.log(results.length + ' browser audit scenarios passed.');
+  if (failures.length) throw new Error(failures.length + ' browser audit scenario(s) failed; see ' + output);
+  console.log(results.length + ' browser audit scenarios passed at ' + (basePath || '/') + '.');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });
