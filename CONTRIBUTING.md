@@ -12,6 +12,7 @@ Install Ruby 3.3, Bundler, and Python 3.9 or newer. Ruby 3.3 matches the version
 
 ```sh
 bundle install
+python3 scripts/fetch_fonts.py
 bundle exec jekyll serve --livereload
 ```
 
@@ -22,6 +23,7 @@ Open http://localhost:4000. Restart Jekyll after changing `_config.yml`.
 Run the same checks as CI:
 
 ```sh
+python3 scripts/fetch_fonts.py
 python3 -m unittest discover -s scripts -p "test_*.py"
 JEKYLL_ENV=production bundle exec jekyll build --trace --baseurl ""
 python3 scripts/check_links.py _site --baseurl ""
@@ -36,6 +38,7 @@ Also check both color themes, keyboard navigation, mobile widths, and code block
 This user site is served at the domain root, so the workflow's `SITE_BASEURL` is empty. For a project site served below a path, update `SITE_BASEURL` in the workflow and pass the same path to the build and checker:
 
 ```sh
+python3 scripts/fetch_fonts.py
 JEKYLL_ENV=production bundle exec jekyll build --trace --baseurl "/portfolio"
 python3 scripts/check_links.py _site --baseurl "/portfolio"
 ```
@@ -101,4 +104,4 @@ Describe the problem, constraints, implementation, and what you learned in the b
 - `assets/theme.js`: system theme preference and saved theme selection.
 - `scripts/`: generated-site link checker and regression tests.
 
-The design uses slate-and-teal light/dark themes, with underlined links and visible focus. There are no analytics or external fonts. See [design and launch notes](docs/plan.md) for decisions and open content questions.
+The design uses slate-and-teal light/dark themes, with underlined links and visible focus. Atkinson Hyperlegible Next is self-hosted; there are no analytics or third-party font requests. See [font provenance and license](assets/fonts/README.md). See [design and launch notes](docs/plan.md) for decisions and open content questions.

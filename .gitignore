@@ -3,3 +3,6 @@ _site/
 .jekyll-cache/
 .bundle/
 vendor/
+
+# Downloaded and verified by scripts/fetch_fonts.py
+/assets/fonts/*.woff2

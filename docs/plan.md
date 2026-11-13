@@ -7,6 +7,7 @@
 - Professional homepage with Projects, Writing, About; résumé follows approved source content.
 - Technical posts first. Personal writing may be added later.
 - Minimalist centered layout. Nathan Spelts's screenshot is a layout reference; identity and palette are original.
+- Atkinson Hyperlegible Next is the primary self-hosted typeface; code remains monospaced.
 - Slate/teal themes; avoid hard-to-read dark blue, dark red, and magenta on dark backgrounds. Light neutral body and secondary text in dark mode.
 - Follow OS theme initially; remember explicit theme selection. Underline links and show keyboard focus.
 - GitHub-only contact for now. Public email alias/forwarding is under consideration; do not publish the email from the Vim file.
