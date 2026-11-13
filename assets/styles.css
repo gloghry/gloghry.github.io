@@ -30,6 +30,11 @@ nav { display:flex; gap:1.4rem; flex-wrap:wrap; }
 nav a { color:var(--muted); }
 nav a[aria-current] { color:var(--accent); text-decoration-thickness:2px; }
 button { font:inherit; font-size:.875rem; color:var(--text); border:1px solid var(--muted); background:transparent; padding:.5rem .75rem; border-radius:.3rem; cursor:pointer; min-height:44px; }
+#theme-toggle { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; flex-shrink:0; }
+.theme-icon { pointer-events:none; }
+.theme-icon-sun { display:none; }
+:root[data-theme="dark"] .theme-icon-sun { display:block; }
+:root[data-theme="dark"] .theme-icon-moon { display:none; }
 [hidden] { display:none !important; }
 .skip-link { position:absolute; top:-6rem; left:1rem; background:var(--bg); padding:.6rem 1rem; z-index:2; }
 .skip-link:focus { top:1rem; }

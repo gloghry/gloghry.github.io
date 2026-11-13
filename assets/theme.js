@@ -10,8 +10,9 @@
     const button = document.getElementById('theme-toggle');
     if (button) {
       button.hidden = false;
-      button.textContent = dark ? 'Light mode' : 'Dark mode';
-      button.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} mode`);
+      const label = `Switch to ${dark ? 'light' : 'dark'} mode`;
+      button.setAttribute('aria-label', label);
+      button.title = label;
     }
   };
   apply();
