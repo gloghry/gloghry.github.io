@@ -36,26 +36,32 @@ def prepare(data):
     result = bytearray(data[:2])
     position, rotation = 2, 1
     width = height = None
+    saw_scan = False
     while position < len(data):
         if data[position] != 0xFF:
             raise ValueError("Invalid JPEG marker")
         start = position
-        while data[position] == 0xFF:
+        while position < len(data) and data[position] == 0xFF:
             position += 1
+        if position == len(data):
+            raise ValueError("Truncated JPEG marker")
         marker = data[position]
         position += 1
-        if marker in (0xDA, 0xD9):
-            if width is None or height is None:
-                raise ValueError("JPEG dimensions not found")
+        if marker == 0xD9:
+            if width is None or height is None or not saw_scan:
+                raise ValueError("JPEG frame or scan not found")
             if rotation != 1:
                 # Retain only orientation; discard original EXIF including GPS/device data.
                 exif = b"Exif\0\0II" + struct.pack("<HIH", 42, 8, 1)
                 exif += struct.pack("<HHIHHI", 0x0112, 3, 1, rotation, 0, 0)
-                result += b"\xff\xe1" + struct.pack(">H", len(exif) + 2) + exif
-            result += data[start:]
+                result[2:2] = b"\xff\xe1" + struct.pack(">H", len(exif) + 2) + exif
+            result += data[start:position]
             if rotation in (5, 6, 7, 8):
                 width, height = height, width
             return bytes(result), width, height
+        if marker == 0x01 or 0xD0 <= marker <= 0xD7:
+            result += data[start:position]
+            continue
         length = struct.unpack_from(">H", data, position)[0]
         end = position + length
         if length < 2 or end > len(data):
@@ -73,7 +79,28 @@ def prepare(data):
         if keep:
             result += data[start:end]
         position = end
-    raise ValueError("JPEG scan not found")
+        if marker == 0xDA:
+            saw_scan = True
+            scan_start = position
+            # Preserve entropy bytes, stuffed FF bytes, and restart/TEM markers.
+            # Stop at the next structural marker so later metadata is filtered too.
+            while position < len(data):
+                boundary = data.find(b"\xff", position)
+                if boundary < 0:
+                    raise ValueError("JPEG end marker not found")
+                following = boundary + 1
+                while following < len(data) and data[following] == 0xFF:
+                    following += 1
+                if following == len(data):
+                    raise ValueError("Truncated JPEG scan marker")
+                value = data[following]
+                if value == 0x00 or value == 0x01 or 0xD0 <= value <= 0xD7:
+                    position = following + 1
+                    continue
+                result += data[scan_start:boundary]
+                position = boundary
+                break
+    raise ValueError("JPEG end marker not found")
 
 
 def main():

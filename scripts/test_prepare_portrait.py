@@ -38,6 +38,31 @@ class PortraitTests(unittest.TestCase):
             with self.subTest(data=data), self.assertRaises((ValueError, IndexError, struct.error)):
                 prepare(data)
 
+    def test_removes_comment_after_scan(self):
+        original = jpeg()
+        source = original[:-2] + segment(0xFE, b"private post-scan comment") + original[-2:]
+        self.assertEqual(prepare(source), (original, 400, 600))
+
+    def test_removes_metadata_between_progressive_scans(self):
+        first = jpeg()[:-2].replace(b"\xff\xc0", b"\xff\xc2", 1)
+        next_scan = segment(0xDA, b"") + b"second-scan\xff\x00data\xff\xd1restart"
+        source = first + segment(0xE1, b"private XMP") + next_scan
+        source += segment(0xFE, b"private final comment") + b"\xff\xd9"
+        expected = first + next_scan + b"\xff\xd9"
+        self.assertEqual(prepare(source), (expected, 400, 600))
+
+    def test_preserves_stuffed_bytes_and_restart_markers(self):
+        source = jpeg().replace(b"scan-data", b"scan\xff\x00data\xff\xd0restart\xff\xff\xd7end")
+        self.assertEqual(prepare(source), (source, 400, 600))
+
+    def test_discards_bytes_after_end_marker(self):
+        original = jpeg()
+        self.assertEqual(prepare(original + b"private trailing data"), (original, 400, 600))
+
+    def test_rejects_scan_without_end_marker(self):
+        with self.assertRaises(ValueError):
+            prepare(jpeg()[:-2])
+
 
 if __name__ == "__main__":
     unittest.main()
