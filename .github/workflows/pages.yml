@@ -24,6 +24,8 @@ jobs:
         run: python3 -m unittest discover -s scripts -p "test_*.py"
       - name: Download verified fonts
         run: python3 scripts/fetch_fonts.py
+      - name: Prepare portrait
+        run: python3 scripts/prepare_portrait.py
       - name: Build site
         run: bundle exec jekyll build --trace --baseurl "$SITE_BASEURL"
         env:

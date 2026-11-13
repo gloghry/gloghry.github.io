@@ -13,6 +13,7 @@ Install Ruby 3.3, Bundler, and Python 3.9 or newer. Ruby 3.3 matches the version
 ```sh
 bundle install
 python3 scripts/fetch_fonts.py
+python3 scripts/prepare_portrait.py
 bundle exec jekyll serve --livereload
 ```
 
@@ -24,6 +25,7 @@ Run the same checks as CI:
 
 ```sh
 python3 scripts/fetch_fonts.py
+python3 scripts/prepare_portrait.py
 python3 -m unittest discover -s scripts -p "test_*.py"
 JEKYLL_ENV=production bundle exec jekyll build --trace --baseurl ""
 python3 scripts/check_links.py _site --baseurl ""
@@ -39,6 +41,7 @@ This user site is served at the domain root, so the workflow's `SITE_BASEURL` is
 
 ```sh
 python3 scripts/fetch_fonts.py
+python3 scripts/prepare_portrait.py
 JEKYLL_ENV=production bundle exec jekyll build --trace --baseurl "/portfolio"
 python3 scripts/check_links.py _site --baseurl "/portfolio"
 ```
@@ -107,3 +110,7 @@ Describe the problem, constraints, implementation, and what you learned in the b
 - `scripts/`: generated-site link checker and regression tests.
 
 The design uses slate-and-teal light/dark themes, with underlined links and visible focus. Atkinson Hyperlegible Next is self-hosted; there are no analytics or third-party font requests. See [font provenance and license](assets/fonts/README.md). See [design and launch notes](docs/plan.md) for decisions and open content questions.
+
+## Portrait
+
+Garett selected `assets/images/originals/Plandid.jpg` for the About page. Run `python3 scripts/prepare_portrait.py` before local Jekyll preview/build; CI runs this step automatically. It creates `assets/images/garett.jpg` and `_data/portrait.yml` with metadata removed except necessary orientation. Pixel data is preserved without cropping or recompression. The original is about 277 KB. Both original uploads live in `assets/images/originals/`, which is excluded from the website output; they remain in repository history. The prepared image is sized responsively in CSS and supplies intrinsic dimensions to reserve layout space.

@@ -26,4 +26,4 @@ defaults:
       type: projects
     values:
       layout: project
-exclude: [README.md, CONTRIBUTING.md, AGENTS.md, Gemfile, Gemfile.lock, vendor, docs, scripts]
+exclude: [README.md, CONTRIBUTING.md, AGENTS.md, Gemfile, Gemfile.lock, vendor, docs, scripts, assets/images/originals]
