@@ -54,7 +54,7 @@ a:hover { text-decoration-thickness:2px; }
 .wordmark { color:var(--text); text-decoration:none; font-weight:650;  font-size:1.25rem; margin-right:auto; }
 .wordmark span,.accent { color:var(--accent); }
 nav { display:flex; gap:1.4rem; flex-wrap:wrap; }
-nav a { color:var(--muted); }
+nav a { color:var(--muted); display:inline-flex; align-items:center; min-height:44px; min-width:44px; }
 nav a[aria-current] { color:var(--accent); text-decoration-thickness:2px; }
 button { font:inherit; font-size:.875rem; color:var(--text); border:1px solid var(--muted); background:transparent; padding:.5rem .75rem; border-radius:.3rem; cursor:pointer; min-height:44px; }
 #theme-toggle { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; flex-shrink:0; }

@@ -12,6 +12,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       SITE_BASEURL: "" # User site at the domain root; set a subpath here for project sites.
     steps:
@@ -32,6 +33,38 @@ jobs:
           JEKYLL_ENV: production
       - name: Check internal links
         run: python3 scripts/check_links.py _site --baseurl "$SITE_BASEURL"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser audit tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/site-audit" --no-save --package-lock=false playwright@1.65.1 @axe-core/playwright@4.14.0
+          "$RUNNER_TEMP/site-audit/node_modules/.bin/playwright" install --with-deps chromium webkit
+      - name: Audit configured deployment path
+        run: node scripts/audit_site.cjs
+        env:
+          NODE_PATH: ${{ runner.temp }}/site-audit/node_modules
+      - name: Audit alternate root or subpath deployment
+        run: |
+          if [ -z "$SITE_BASEURL" ]; then
+            audit_base="/portfolio"
+          else
+            audit_base=""
+          fi
+          bundle exec jekyll build --trace --baseurl "$audit_base" --destination "$RUNNER_TEMP/alternate-site"
+          python3 scripts/check_links.py "$RUNNER_TEMP/alternate-site" --baseurl "$audit_base"
+          SITE_BASEURL="$audit_base" SITE_DIRECTORY="$RUNNER_TEMP/alternate-site" AUDIT_OUTPUT_DIR="audit-results/alternate" node scripts/audit_site.cjs
+        env:
+          NODE_PATH: ${{ runner.temp }}/site-audit/node_modules
+          JEKYLL_ENV: production
+      - name: Upload browser audit results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-audit
+          path: audit-results/
+          if-no-files-found: ignore
+          retention-days: 7
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
   deploy:

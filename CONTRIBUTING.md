@@ -33,7 +33,9 @@ python3 scripts/check_links.py _site --baseurl ""
 
 The link checker verifies local file targets in generated HTML. It handles directory indexes, URL dot segments, artifact boundaries, and deployment base paths. It does not check remote URLs or fragment IDs.
 
-Also check both color themes, keyboard navigation, mobile widths, and code block scrolling in a browser. If Ruby/Jekyll or browser preview is unavailable, state which checks have not run and use CI for build verification.
+The build also runs Chromium/WebKit responsive and accessibility checks and uploads a browser-audit artifact with screenshots and a JSON report. See [audit coverage and local commands](docs/accessibility.md).
+
+Also check both color themes, keyboard navigation, mobile widths, and code block scrolling on real devices. If Ruby/Jekyll or browser preview is unavailable, state which checks have not run and use CI for build verification.
 
 ### Subpath deployments
 
