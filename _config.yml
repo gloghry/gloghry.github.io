@@ -1,6 +1,6 @@
 title: Garett Loghry
 description: Software engineer with an interest in embedded systems and firmware.
-url: https://gloghry.github.io
+url: https://garettloghry.com
 baseurl: ""
 markdown: kramdown
 permalink: /writing/:title/
