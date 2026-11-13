@@ -3,7 +3,7 @@
 ## Agreed direction
 
 - Garett Loghry: current engineering tools/application work, with some embedded and low-level development. Moving toward embedded systems and firmware.
-- Engineering management master's degree is a future plan, not a credential or enrollment claim.
+- Garett is applying to WSU’s engineering and technology management master’s program; do not describe him as enrolled or holding the degree.
 - Professional homepage with Projects, Writing, About; résumé follows approved source content.
 - Technical posts first. Personal writing may be added later.
 - Minimalist centered layout. Nathan Spelts's screenshot is a layout reference; identity and palette are original.
