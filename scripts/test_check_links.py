@@ -52,6 +52,26 @@ class LinkCheckerTests(unittest.TestCase):
         self.write('a file.pdf')
         self.assertEqual(check(self.root), [])
 
+    def test_slash_terminated_file_url_fails(self):
+        self.write('index.html', '<script src="/assets/theme.js/"></script>')
+        self.write('assets/theme.js')
+        self.assertEqual(len(check(self.root)), 1)
+
+    def test_slash_terminated_directory_index_passes(self):
+        self.write('index.html', '<a href="/projects/">Projects</a>')
+        self.write('projects/index.html')
+        self.assertEqual(check(self.root), [])
+
+    def test_slash_semantics_with_base_path_and_query(self):
+        self.write('index.html', '<script src="/portfolio/assets/theme.js/?v=1"></script>')
+        self.write('assets/theme.js')
+        self.assertEqual(len(check(self.root, '/portfolio')), 1)
+
+    def test_filename_ending_in_index_is_not_directory_index(self):
+        self.write('customindex.html', '<a href="sibling.html">Sibling</a>')
+        self.write('sibling.html')
+        self.assertEqual(check(self.root), [])
+
     def test_symlink_cannot_escape_artifact(self):
         external = self.checkout / 'private.txt'
         external.write_text('Not published')

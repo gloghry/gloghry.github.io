@@ -29,7 +29,7 @@ def check(root, baseurl=''):
         parser.feed(page.read_text())
         relative = page.relative_to(root).as_posix()
         # Jekyll serves directory index pages at a trailing-slash URL.
-        if relative.endswith('index.html'):
+        if page.name == 'index.html':
             relative = relative[:-len('index.html')]
         page_url = f'https://site.invalid{base}/{relative}'
         for url in parser.urls:
@@ -38,7 +38,9 @@ def check(root, baseurl=''):
                 continue
             resolved = urlsplit(urljoin(page_url, url))
             # Normalize at the URL root, never relative to the checkout.
-            path = posixpath.normpath('/' + unquote(resolved.path).lstrip('/'))
+            decoded_path = unquote(resolved.path)
+            requires_index = decoded_path.endswith(('/', '/.', '/..'))
+            path = posixpath.normpath('/' + decoded_path.lstrip('/'))
             if base and path != base and not path.startswith(base + '/'):
                 errors.append(f'{page.relative_to(root)}: outside base path {url}')
                 continue
@@ -46,7 +48,8 @@ def check(root, baseurl=''):
             target = (root / artifact_path).resolve()
             if not target.is_relative_to(root):
                 errors.append(f'{page.relative_to(root)}: outside artifact {url}')
-            elif not target.is_file() and not (target / 'index.html').is_file():
+            elif not ((target / 'index.html').is_file() if requires_index
+                      else target.is_file() or (target / 'index.html').is_file()):
                 errors.append(f'{page.relative_to(root)}: missing {url}')
     return errors
 
