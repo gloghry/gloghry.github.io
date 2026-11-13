@@ -16,9 +16,12 @@ Open http://localhost:4000. Restart Jekyll after changing `_config.yml`.
 ## Validate
 
 ```sh
+python3 -m unittest discover -s scripts -p "test_*.py"
 bundle exec jekyll build --trace
 python3 scripts/check_links.py _site
 ```
+
+For a subpath deployment, set `SITE_BASEURL` in the workflow and use the same value with both `jekyll build --baseurl /portfolio` and `check_links.py _site --baseurl /portfolio`. The checker resolves URL dot segments inside the published artifact and rejects links outside its base path.
 
 Pull requests run these checks. Also manually check both themes, keyboard navigation, mobile widths, and code block scrolling. Ruby/Jekyll and browser validation remain required if the development environment cannot run them.
 

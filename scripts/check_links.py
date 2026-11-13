@@ -1,8 +1,9 @@
-"""Check local page, image, stylesheet, and script targets in a Jekyll build."""
+"""Check internal file targets using the deployed site's URL semantics."""
+import argparse
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import unquote, urlsplit
-import sys
+import posixpath
+from urllib.parse import unquote, urljoin, urlsplit
 
 
 class Links(HTMLParser):
@@ -16,7 +17,9 @@ class Links(HTMLParser):
                 self.urls.append(value)
 
 
-def check(root):
+def check(root, baseurl=''):
+    root = root.resolve()
+    base = '/' + baseurl.strip('/') if baseurl.strip('/') else ''
     errors = []
     pages = list(root.rglob('*.html'))
     if not pages:
@@ -24,21 +27,38 @@ def check(root):
     for page in pages:
         parser = Links()
         parser.feed(page.read_text())
+        relative = page.relative_to(root).as_posix()
+        # Jekyll serves directory index pages at a trailing-slash URL.
+        if relative.endswith('index.html'):
+            relative = relative[:-len('index.html')]
+        page_url = f'https://site.invalid{base}/{relative}'
         for url in parser.urls:
             parts = urlsplit(url)
             if parts.scheme or parts.netloc or not parts.path:
                 continue
-            path = unquote(parts.path)
-            target = root / path.lstrip('/') if path.startswith('/') else page.parent / path
-            if not target.is_file() and not (target / 'index.html').is_file():
+            resolved = urlsplit(urljoin(page_url, url))
+            # Normalize at the URL root, never relative to the checkout.
+            path = posixpath.normpath('/' + unquote(resolved.path).lstrip('/'))
+            if base and path != base and not path.startswith(base + '/'):
+                errors.append(f'{page.relative_to(root)}: outside base path {url}')
+                continue
+            artifact_path = path[len(base):].lstrip('/')
+            target = (root / artifact_path).resolve()
+            if not target.is_relative_to(root):
+                errors.append(f'{page.relative_to(root)}: outside artifact {url}')
+            elif not target.is_file() and not (target / 'index.html').is_file():
                 errors.append(f'{page.relative_to(root)}: missing {url}')
     return errors
 
 
 if __name__ == '__main__':
-    errors = check(Path(sys.argv[1] if len(sys.argv) > 1 else '_site'))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('root', nargs='?', default='_site')
+    parser.add_argument('--baseurl', default='')
+    args = parser.parse_args()
+    errors = check(Path(args.root), args.baseurl)
     for error in errors:
         print(error)
     if errors:
-        sys.exit(1)
+        raise SystemExit(1)
     print('All internal file targets exist.')

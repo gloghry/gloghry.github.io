@@ -12,18 +12,22 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SITE_BASEURL: "" # User site at the domain root; set a subpath here for project sites.
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
+      - name: Test link checker
+        run: python3 -m unittest discover -s scripts -p "test_*.py"
       - name: Build site
-        run: bundle exec jekyll build --trace
+        run: bundle exec jekyll build --trace --baseurl "$SITE_BASEURL"
         env:
           JEKYLL_ENV: production
       - name: Check internal links
-        run: python3 scripts/check_links.py _site
+        run: python3 scripts/check_links.py _site --baseurl "$SITE_BASEURL"
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
   deploy:
