@@ -1,50 +1,19 @@
-# Garett Loghry's website
+# Garett Loghry
 
-Minimalist portfolio and technical blog for https://gloghry.github.io, built with Jekyll. Slate-and-teal light/dark themes follow system preferences until the visitor selects a theme. No analytics or external fonts.
+I’m a software engineer at Hyster-Yale, interested in embedded systems, firmware, and understanding the machines my code interacts with. My work has taken me from embedded C for industrial vehicles to desktop tools for programming and troubleshooting their controllers.
 
-## Local development
+**[Visit my website →](https://gloghry.github.io)**
 
-Install Ruby 3.3 and Bundler, then run:
+## Why I’m building this
 
-```sh
-bundle install
-bundle exec jekyll serve --livereload
-```
+A résumé can tell you what I’ve worked with. I want this site to show more of the work itself: what I was trying to build, what confused me, what I tried, and how I figured it out.
 
-Open http://localhost:4000. Restart Jekyll after changing `_config.yml`.
+I’m putting together project write-ups and technical notes, with a particular interest in software that interacts with hardware. Sometimes that means a finished project. Other times it might be a debugging problem or a concept that finally clicked after I spent some time with it.
 
-## Validate
+The site is still taking shape. For now, you can learn more about me there or [explore my code on GitHub](https://github.com/gloghry).
 
-```sh
-python3 -m unittest discover -s scripts -p "test_*.py"
-bundle exec jekyll build --trace
-python3 scripts/check_links.py _site
-```
+## Working on the site
 
-For a subpath deployment, set `SITE_BASEURL` in the workflow and use the same value with both `jekyll build --baseurl /portfolio` and `check_links.py _site --baseurl /portfolio`. The checker resolves URL dot segments inside the published artifact and rejects links outside its base path.
+This repository contains the Jekyll source for the website, published through GitHub Pages. The design stays simple so the projects and writing can take the space they need.
 
-Pull requests run these checks. Also manually check both themes, keyboard navigation, mobile widths, and code block scrolling. Ruby/Jekyll and browser validation remain required if the development environment cannot run them.
-
-## Publish to GitHub Pages
-
-In repository Settings → Pages, select **GitHub Actions** as the source. Merging to `main` runs `.github/workflows/pages.yml`, builds the site, and deploys the Pages artifact. The `github-pages` environment may require approval depending on repository settings. A pull request only builds; it does not publish. Confirm the Actions run and live URL after deployment.
-
-## Add content
-
-Write posts as `_posts/YYYY-MM-DD-short-title.md` with front matter:
-
-```yaml
----
-title: A real article title
-description: A short summary
-tags: [firmware]
----
-```
-
-The filename supplies the date; articles use the post layout. Put unpublished work in `_drafts/` and preview with `bundle exec jekyll serve --drafts`.
-
-Add projects as `_projects/short-name.md` with `title`, `description`, `order`, `technologies` (a YAML list), and optional `repository` URL in front matter. The body should describe the problem, constraints, implementation, and lessons learned. Do not add private employer information.
-
-Navigation and metadata live in `_layouts/default.html`; colors and responsive styles in `assets/styles.css`; theme preference in `assets/theme.js`.
-
-See [design and launch notes](docs/plan.md) for decisions and open content questions.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, checks, publishing, and adding content. [Design and launch notes](docs/plan.md) track the site’s direction and outstanding work.
