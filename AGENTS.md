@@ -9,6 +9,13 @@
 - Reference the issue in the pull request. Use `Closes #N` only when the change completes its scope; otherwise use `Related to #N` and state what remains.
 - Check review feedback and CI before reporting a change as ready. Report any verification that could not run.
 
+## Pull request attribution
+
+- Every PR created or substantially implemented by Codex must include a concise footer: **AI assistance:** Implemented with OpenAI Codex `<verified version>`; opened through Garett’s connected GitHub account.
+- Include verified model names inline when available and relevant. Omit unavailable metadata, unknown-field placeholders, and metadata tables. Never guess versions/models or apply today's metadata to earlier work without evidence.
+- Preserve credit for Garett's supplied writing, palette, designs, and decisions. Adapt the contribution wording when needed; GitHub's author remains the authenticated account.
+- Add the footer when opening the PR and retain it when updating the description.
+
 ## Copy and content
 
 - Use Garett's supplied and approved drafts as the baseline. Make focused edits instead of replacing his voice with generic portfolio or résumé language.
