@@ -1,0 +1,7 @@
+---
+title: Projects
+description: Selected engineering projects and explorations by Garett Loghry.
+---
+<header class="page-heading"><p class="eyebrow">Selected work</p><h1>Projects</h1><p class="lede">Problems, constraints, and what I learned along the way.</p></header>
+{% assign projects = site.projects | sort: 'order' %}
+{% for project in projects %}<article class="entry"><h2><a href="{{ project.url | relative_url }}">{{ project.title | escape }}</a></h2><p>{{ project.description | escape }}</p></article>{% else %}<p class="muted">I'm putting together project write-ups. In the meantime, you can find me <a href="https://github.com/gloghry">on GitHub</a>.</p>{% endfor %}

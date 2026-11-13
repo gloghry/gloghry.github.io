@@ -1,0 +1,6 @@
+---
+title: Writing
+description: Technical notes and project explorations by Garett Loghry.
+---
+<header class="page-heading"><p class="eyebrow">Notes & explorations</p><h1>Writing</h1><p class="lede">A place to work through technical ideas and share what I learn.</p></header>
+{% for post in site.posts %}<article class="entry"><time class="muted" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%B %-d, %Y' }}</time><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2><p>{{ post.description | escape }}</p>{% if post.tags.size > 0 %}<p class="muted">{{ post.tags | join: ' · ' | escape }}</p>{% endif %}</article>{% else %}<p class="muted">No posts yet. Technical notes and project explorations are on the way.</p>{% endfor %}

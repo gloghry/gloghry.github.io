@@ -1,0 +1,29 @@
+title: Garett Loghry
+description: Software engineer working toward embedded systems and firmware development.
+url: https://gloghry.github.io
+baseurl: ""
+markdown: kramdown
+permalink: /writing/:title/
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+exclude: [README.md, Gemfile, Gemfile.lock, vendor, docs, scripts]
