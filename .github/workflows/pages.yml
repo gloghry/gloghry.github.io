@@ -22,6 +22,8 @@ jobs:
           bundler-cache: true
       - name: Test link checker
         run: python3 -m unittest discover -s scripts -p "test_*.py"
+      - name: Download verified fonts
+        run: python3 scripts/fetch_fonts.py
       - name: Build site
         run: bundle exec jekyll build --trace --baseurl "$SITE_BASEURL"
         env:
