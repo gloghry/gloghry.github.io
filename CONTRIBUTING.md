@@ -44,7 +44,7 @@ For local setup with an authenticated GitHub CLI:
 python3 scripts/setup_labels.py
 ```
 
-The connected GitHub tool can apply labels, but cannot list the complete catalog or create labels directly. Until the setup workflow has succeeded after merge, report missing labels explicitly and keep setup verification open. After it succeeds, apply the labels to the implementing PR and any other open PRs, then check the filters above. GitHub also provides manual setup under Issues → Labels → New label; see [GitHub's label instructions](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels).
+The connected GitHub tool can apply labels and creates a missing label with default styling when applying it. It cannot list the complete repository catalog or set label colors/descriptions. Prefer the setup workflow to review the catalog and create missing entries with the descriptions above; it preserves any labels already created through the connector. Until that workflow has succeeded after merge, keep catalog verification open. Apply labels to the implementing PR and any other open PRs, then check the filters above. GitHub also provides manual setup under Issues → Labels → New label; see [GitHub's label instructions](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels).
 
 ## Local setup
 
