@@ -30,6 +30,6 @@
     </button>
   </header>
   <main id="main" class="wrap" tabindex="-1">{{ content }}</main>
-  <footer class="site-footer wrap"><span>Garett Loghry</span><a href="https://github.com/gloghry">GitHub</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></footer>
+  <footer class="site-footer wrap"><span>Garett Loghry</span><a href="https://github.com/gloghry">GitHub</a>{% if site.email %}<a href="mailto:{{ site.email | escape }}">Email</a>{% endif %}<a href="{{ '/feed.xml' | relative_url }}">RSS</a></footer>
 </body>
 </html>
