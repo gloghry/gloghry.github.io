@@ -20,8 +20,8 @@
   <header class="site-header wrap">
     <a class="wordmark" href="{{ '/' | relative_url }}">Garett Loghry<span aria-hidden="true">.</span></a>
     <nav aria-label="Main navigation">
-      {% assign paths = '/projects/,/writing/,/about/' | split: ',' %}
-      {% assign names = 'Projects,Writing,About' | split: ',' %}
+      {% assign paths = '/projects/,/writing/,/about/,/resume/' | split: ',' %}
+      {% assign names = 'Projects,Writing,About,Résumé' | split: ',' %}
       {% for path in paths %}<a href="{{ path | relative_url }}"{% if page.url contains path %} aria-current="page"{% endif %}>{{ names[forloop.index0] }}</a>{% endfor %}
     </nav>
     <button id="theme-toggle" type="button" hidden aria-label="Switch color theme">
