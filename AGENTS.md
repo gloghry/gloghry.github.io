@@ -30,6 +30,13 @@
 - Keep current work, technical experience, leadership experience, and education status accurate. Ask about missing personal details rather than inventing them.
 - Do not publish private workplace incidents or infer permission to publish contact details from source material.
 
+## Jekyll base paths
+
+- Honor `baseurl`/`SITE_BASEURL` in tooling, previews, navigation, and asset URLs. Use Jekyll's `relative_url` filter for site-relative template links.
+- Jekyll writes files directly beneath its destination; a public URL prefix such as `/portfolio` is not an extra output directory. A preview/audit server must mount that destination at the matching URL prefix, and browser URLs must use the same prefix.
+- When changing build, serving, link-checking, or preview infrastructure, verify both the domain root and a nonempty subpath. Keep build, server, and checker settings synchronized; never assume the site is always served at `/`.
+- Use the existing link-checker regression tests and CI's configured/alternate browser audits; see [audit commands](docs/accessibility.md). Keep alternate test output separate from the production artifact.
+
 ## Development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, checks, publication, and content authoring. Run checks appropriate to the change; do not add tests merely to mirror prose edits.
