@@ -4,7 +4,7 @@ Issue #20 covers font/JavaScript weight, layout stability, and reduced-motion be
 
 ## Current design
 
-- Atkinson Hyperlegible Next is served locally as upright/italic variable WOFF2 files (48,188 and 52,692 bytes). Only used faces need to load; the upright face is preloaded and both use font-display: swap with system fallbacks.
+- Atkinson Hyperlegible Next is served locally as upright/italic variable WOFF2 files (48,188 and 52,692 bytes). Only used faces need to load; the upright face is preloaded and both use font-display: swap with Arial/sans-serif fallbacks. The temporary fallback is kept independent of platform UI-font choices so it can be checked consistently during delayed loads.
 - The prepared portrait is about 277 KB, preserves intrinsic dimensions/orientation, and appears only on About. Unprepared originals are excluded from site output.
 - The visitor JavaScript is the small theme script; browser/axe audit packages run in CI only.
 - There is no decorative animation. Reduced-motion checks verify page load and theme switching remain still.
