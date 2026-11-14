@@ -50,6 +50,8 @@ python3 scripts/check_links.py _site --baseurl "/portfolio"
 
 For a matching local preview, use `bundle exec jekyll serve --baseurl "/portfolio"` and open http://localhost:4000/portfolio/. Update `url` and `baseurl` in `_config.yml` if the deployment address changes.
 
+Site tooling must honor both root and subpath deployments. Jekyll's output files stay directly under the destination even when URLs begin with `/portfolio`; a preview server must mount them at that prefix. Use `relative_url` for site-relative template links. The [agent base-path rules](AGENTS.md#jekyll-base-paths) apply to build/preview/checker changes. Existing CI audits the configured path and an alternate root/subpath build; [local browser audit commands](docs/accessibility.md) use matching `SITE_BASEURL` and `SITE_DIRECTORY`.
+
 ## Publishing
 
 In repository Settings → Pages, select **GitHub Actions** as the source.
