@@ -73,7 +73,17 @@ h2 { font-size:1.6rem; }
 h3 { font-size:1.2rem; }
 .lede { font-size:clamp(1.35rem,3.4vw,1.85rem); line-height:1.5;  }
 .intro { max-width:41rem; color:var(--muted); }
-.link-row { display:flex; gap:1.6rem; flex-wrap:wrap; margin-top:2rem; }
+.hero-about { margin:1.5rem 0 0; }
+.hero-about a { display:inline-flex; align-items:center; gap:.35rem; min-height:44px; }
+.hero-contact { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:1.5rem 3rem; margin:2.5rem 0 0; padding-top:1.5rem; border-top:1px solid var(--line); }
+.hero-contact > div { min-width:0; }
+.hero-contact dt { color:var(--muted); font-size:.875rem; margin-bottom:.25rem; }
+.hero-contact dd { margin:0; }
+.hero-contact a { display:inline-flex; align-items:center; gap:.4rem; min-height:44px; max-width:100%; }
+.hero-email span { min-width:0; overflow-wrap:anywhere; }
+.hero-email svg { flex-shrink:0; }
+.hero-profiles { display:flex; flex-wrap:wrap; gap:.25rem 1.25rem; list-style:none; padding:0; margin:0; }
+@media (max-width:600px) { .hero-contact { grid-template-columns:minmax(0,1fr); gap:1rem; } }
 .home-section { padding-block:2rem 3rem; border-top:1px solid var(--line); }
 .section-heading { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; }
 .section-heading h2 { margin:0; }

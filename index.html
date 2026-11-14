@@ -5,7 +5,24 @@ description: Software engineer with an interest in embedded systems and firmware
   <h1>Garett Loghry<span class="accent">.</span></h1>
   <p class="lede">Software engineer with an interest in embedded systems and firmware.</p>
   <p class="intro">I work at Hyster-Yale, building software for industrial vehicles and the tools used to support them. I like understanding how things work, learning from the people around me, and building things that make someone’s work easier.</p>
-  <div class="link-row"><a href="{{ '/about/' | relative_url }}">More about me <span aria-hidden="true">↗</span></a><a href="https://github.com/gloghry">GitHub <span aria-hidden="true">↗</span></a>{% if site.linkedin_url %}<a href="{{ site.linkedin_url | escape }}">LinkedIn</a>{% endif %}{% if site.email %}<a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a>{% endif %}</div>
+  <p class="hero-about"><a href="{{ '/about/' | relative_url }}">More about me <span aria-hidden="true">→</span></a></p>
+  <dl class="hero-contact">
+    {% if site.email %}
+    <div>
+      <dt>Email</dt>
+      <dd><a class="hero-email" href="mailto:{{ site.email | escape }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg><span>{{ site.email | escape }}</span></a></dd>
+    </div>
+    {% endif %}
+    <div>
+      <dt>Profiles</dt>
+      <dd>
+        <ul class="hero-profiles">
+          <li><a href="https://github.com/gloghry">GitHub <span aria-hidden="true">↗</span></a></li>
+          {% if site.linkedin_url %}<li><a href="{{ site.linkedin_url | escape }}">LinkedIn <span aria-hidden="true">↗</span></a></li>{% endif %}
+        </ul>
+      </dd>
+    </div>
+  </dl>
 </section>
 <section class="home-section" aria-labelledby="projects-heading">
   <div class="section-heading"><h2 id="projects-heading">Selected projects</h2><a href="{{ '/projects/' | relative_url }}">All projects →</a></div>
