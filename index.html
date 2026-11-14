@@ -1,18 +1,35 @@
 ---
 description: Software engineer with an interest in embedded systems and firmware.
 ---
+{% assign projects = site.projects | sort: 'order' %}
 <section class="hero">
   <h1>Garett Loghry<span class="accent">.</span></h1>
   <p class="lede">Software engineer with an interest in embedded systems and firmware.</p>
   <p class="intro">I work at Hyster-Yale, building software for industrial vehicles and the tools used to support them. I like understanding how things work, learning from the people around me, and building things that make someone’s work easier.</p>
-  <div class="link-row"><a href="{{ '/about/' | relative_url }}">More about me <span aria-hidden="true">↗</span></a><a href="https://github.com/gloghry">GitHub <span aria-hidden="true">↗</span></a>{% if site.linkedin_url %}<a href="{{ site.linkedin_url | escape }}">LinkedIn</a>{% endif %}{% if site.email %}<a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a>{% endif %}</div>
+  <div class="hero-actions">
+    {% if projects.size > 0 %}
+    <a class="hero-primary" href="{{ '/projects/' | relative_url }}">View projects <span aria-hidden="true">→</span></a>
+    <a class="hero-secondary" href="{{ '/about/' | relative_url }}">About me</a>
+    {% else %}
+    <a class="hero-primary" href="{{ '/about/' | relative_url }}">About me <span aria-hidden="true">→</span></a>
+    {% endif %}
+  </div>
 </section>
+{% if projects.size > 0 %}
 <section class="home-section" aria-labelledby="projects-heading">
   <div class="section-heading"><h2 id="projects-heading">Selected projects</h2><a href="{{ '/projects/' | relative_url }}">All projects →</a></div>
-  {% assign projects = site.projects | sort: 'order' %}
-  {% for project in projects limit:3 %}<article class="entry"><h3><a href="{{ project.url | relative_url }}">{{ project.title | escape }}</a></h3><p>{{ project.description | escape }}</p></article>{% else %}<p class="muted">Project write-ups are on the way.</p>{% endfor %}
+  {% for project in projects limit:3 %}<article class="entry"><h3><a href="{{ project.url | relative_url }}">{{ project.title | escape }}</a></h3><p>{{ project.description | escape }}</p></article>{% endfor %}
 </section>
+{% endif %}
+{% if site.posts.size > 0 %}
 <section class="home-section" aria-labelledby="writing-heading">
   <div class="section-heading"><h2 id="writing-heading">Recent writing</h2><a href="{{ '/writing/' | relative_url }}">All writing →</a></div>
-  {% for post in site.posts limit:3 %}<article class="entry"><time class="muted" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d, %Y' }}</time><h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3><p>{{ post.description | escape }}</p></article>{% else %}<p class="muted">Technical notes and project explorations, coming soon.</p>{% endfor %}
+  {% for post in site.posts limit:3 %}<article class="entry"><time class="muted" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d, %Y' }}</time><h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3><p>{{ post.description | escape }}</p></article>{% endfor %}
 </section>
+{% endif %}
+{% if site.email %}
+<section class="home-section" id="contact" aria-labelledby="contact-heading">
+  <h2 id="contact-heading">Contact</h2>
+  <p>You can reach me at <a class="contact-address" href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a>.</p>
+</section>
+{% endif %}
