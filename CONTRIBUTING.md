@@ -12,6 +12,40 @@ Use the Work item issue form to select exactly one priority and explain why. Pri
 
 For API-created issues, include a `## Priority` section with a P0–P3 value and short rationale. GitHub forms render the equivalent field under `### Priority`; both are accepted. Confirm dependencies and required input before starting, preserve existing priority decisions, and do not invent missing content to unblock work.
 
+## Pull request labels
+
+Use exactly one change-type label and one priority label on each PR:
+
+| Label | Use |
+| --- | --- |
+| `enhancement` | New functionality or a meaningful improvement |
+| `bug` | Correcting unintended behavior |
+| `documentation` | Documentation or agent guidance without a product change |
+| `maintenance` | Dependencies, build tooling, or repository upkeep |
+| `priority:P0`–`priority:P3` | Priority from the linked issue's Priority section |
+
+Choose the type that describes the main result. For mixed changes, explain the supporting work in the PR description instead of adding multiple types. Take the highest priority (lowest number) when a PR addresses multiple issues; do not infer it from effort or whether input is needed. The issue body remains the source of truth. Resolve a missing or ambiguous issue priority before assigning a PR priority.
+
+Use existing `accessibility` when relevant. Other area labels can wait until the PR volume makes them useful; do not invent labels per PR. Keep Codex assistance in the required attribution footer rather than adding another label.
+
+For example, this labeling-guidance PR uses `documentation` and `priority:P1`; a P0 theme-control bug uses `bug`, `priority:P0`, and `accessibility` when it removes an accessibility barrier. Review labels again when the scope or linked issue priority changes, removing stale type/priority labels while preserving unrelated labels.
+
+Filter Pull requests with `is:pr is:open label:"priority:P1"` or `is:pr label:documentation`. Verify the labels in the PR sidebar after applying them.
+
+### Label setup
+
+The **Repository labels** workflow runs on `main` when its workflow or setup script changes, and can also be run from Actions → Repository labels → Run workflow. It lists the existing catalog and creates only missing labels, leaving existing colors, descriptions, and unrelated labels intact. It does not label PRs automatically.
+
+This workflow has only repository-content read and issue-label write permissions. It runs trusted default-branch code and has no PR trigger. Path-based PR labeling is unnecessary for the current volume.
+
+For local setup with an authenticated GitHub CLI:
+
+```sh
+python3 scripts/setup_labels.py
+```
+
+The connected GitHub tool can apply labels, but cannot list the complete catalog or create labels directly. Until the setup workflow has succeeded after merge, report missing labels explicitly and keep setup verification open. After it succeeds, apply the labels to the implementing PR and any other open PRs, then check the filters above. GitHub also provides manual setup under Issues → Labels → New label; see [GitHub's label instructions](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/managing-labels).
+
 ## Local setup
 
 Install Ruby 3.3, Bundler, and Python 3.9 or newer. Ruby 3.3 matches the version in [.github/workflows/pages.yml](.github/workflows/pages.yml); Python runs the link checker and its regression tests.

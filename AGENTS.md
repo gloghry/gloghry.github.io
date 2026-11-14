@@ -17,6 +17,12 @@
 - Preserve explicit priorities unless Garett authorizes reprioritization; record the rationale for deliberate changes. Do not rewrite completed issues' historical priorities.
 - When triaging, audit all open issues for missing or ambiguous priority values. Agents creating issues through the API must supply the field themselves; the web form does not validate API requests.
 
+## Pull request labels
+
+- Apply exactly one change-type label and one priority label when opening or updating a PR; follow the catalog and examples in [CONTRIBUTING.md](CONTRIBUTING.md#pull-request-labels).
+- Mirror the linked issue's explicit priority, using the highest priority (lowest number) for multiple issues. Resolve missing or ambiguous priorities rather than guessing. Recheck labels when scope changes and remove stale type/priority labels.
+- Verify applied labels. If a label is unavailable or setup cannot run, report that limitation and the setup step; do not claim completion. Preserve the attribution footer independently of labels.
+
 ## Pull request attribution
 
 - Every PR created or substantially implemented by Codex must include a concise footer: **AI assistance:** Implemented with OpenAI Codex `<verified version>`; opened through Garett’s connected GitHub account.
