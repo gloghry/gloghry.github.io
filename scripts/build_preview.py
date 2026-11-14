@@ -47,7 +47,7 @@ def main():
                        cwd=ROOT, env=environment, check=True)
     # JSON is valid YAML. Keep overrides outside the source/output tree.
     with tempfile.TemporaryDirectory(prefix="site-preview-") as temporary:
-        config = Path(temporary) / "preview.json"
+        config = Path(temporary) / "preview.yml"
         config.write_text(json.dumps({
             "url": origin, "baseurl": baseurl, "preview": True,
             "production_url": "https://garettloghry.com",
