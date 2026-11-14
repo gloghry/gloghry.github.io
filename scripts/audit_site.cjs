@@ -98,7 +98,9 @@ async function performanceChecks(browser, name) {
                 type: response.request().resourceType(), bodyBytes: body.length };
             })());
           });
-          await page.route(/\\.(woff2|jpe?g)(\\?|$)/, async request => {
+          let delayedResources = 0;
+          await page.route(/\.(woff2|jpe?g)(\?|$)/, async request => {
+            delayedResources += 1;
             await delay(200);
             await request.continue();
           });
@@ -126,7 +128,7 @@ async function performanceChecks(browser, name) {
                 .map(font => ({ status: font.status, display: font.display })) };
           });
           const responses = await Promise.all(pendingResponses);
-          const metric = { browser: name, route, width, theme, ...render,
+          const metric = { browser: name, route, width, theme, delayedResources, ...render,
             totalBodyBytes: responses.reduce((sum, item) => sum + item.bodyBytes, 0),
             scriptBodyBytes: responses.filter(item => item.type === 'script').reduce((sum, item) => sum + item.bodyBytes, 0),
             resources: responses.map(item => ({ ...item, url: new URL(item.url).pathname })) };
@@ -135,6 +137,7 @@ async function performanceChecks(browser, name) {
           assert(responses.every(item => new URL(item.url).origin === origin), 'Unexpected third-party request');
           assert(responses.every(item => item.status < 400), 'A cold-load resource failed');
           assert(metric.totalBodyBytes > 0, 'No response-body measurements were captured');
+          assert(delayedResources > 0, 'Delayed font/photo loading was not exercised');
           assert(render.fontFaces.some(font => font.status === 'loaded'), 'Custom font did not load');
           assert(render.fontFaces.every(font => font.display === 'swap'), 'Font must keep swap display');
           if (name === 'chromium') assert.notEqual(render.loadCLS, null, 'Layout-shift observation unavailable');
