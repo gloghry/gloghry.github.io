@@ -39,3 +39,19 @@
 - [ ] Confirm Pages source, deployment result, and live URL.
 
 The first skeleton has honest empty states and no invented work history or posts. Foundation implementation does not complete content or manual audit issues.
+
+## Page structure and link placement
+
+Each area has a specific job; an existing row of links is not a reason to put another link there.
+
+| Area | Job |
+| --- | --- |
+| Header | Navigate the site: name/home, Projects, Writing, About, theme control. |
+| Homepage introduction | Explain who Garett is and offer one main next step. About me stands alone until real project write-ups exist; then View projects leads, with About as a quieter secondary link. |
+| Homepage work sections | Show actual projects and writing, with relevant detail/source links. Hide empty homepage sections; index pages retain honest empty states. |
+| About | Background, interests, experience, and relevant professional profiles. Résumé links follow approved content under #12. |
+| Contact | A brief invitation and the full, copyable public email address near the bottom of the homepage. |
+| Footer | Consistent access to full email address, GitHub, and LinkedIn from every page. Copyright notice follows the rights/notice decisions in #49. |
+| Writing | Articles and an RSS subscription link in their reading context. |
+
+Use links for navigation/downloads/email and buttons for actions such as the theme control. Keep internal and external navigation in the same tab by default. Profile links use plain, consistent labels without external-arrow decoration; never use an external-arrow symbol for an internal About link. Keep the full email visible with a mailto destination. Links retain underlines, hover changes, and keyboard-focus outlines, so color is not the only cue.
