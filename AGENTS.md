@@ -9,6 +9,14 @@
 - Reference the issue in the pull request. Use `Closes #N` only when the change completes its scope; otherwise use `Related to #N` and state what remains.
 - Check review feedback and CI before reporting a change as ready. Report any verification that could not run.
 
+## Issue priorities
+
+- Every issue must have exactly one P0/P1/P2/P3 value in a Priority section and a brief rationale. For API-created issues use `## Priority`; accept GitHub issue forms' generated `### Priority` heading too. The body is the source of truth; labels may mirror it.
+- P0: highest priority, including foundational usability/accessibility or release/promotion blockers. P1: near-term functionality, professional content, discovery, or workflow improvements. P2: follow-up polish, secondary content, or organization. P3: optional exploration.
+- Before starting, confirm priority, scope, dependencies, and missing inputs. Choose the highest-priority actionable work or unblock its prerequisite. Priority is separate from effort and readiness; it does not imply user input is required.
+- Preserve explicit priorities unless Garett authorizes reprioritization; record the rationale for deliberate changes. Do not rewrite completed issues' historical priorities.
+- When triaging, audit all open issues for missing or ambiguous priority values. Agents creating issues through the API must supply the field themselves; the web form does not validate API requests.
+
 ## Pull request attribution
 
 - Every PR created or substantially implemented by Codex must include a concise footer: **AI assistance:** Implemented with OpenAI Codex `<verified version>`; opened through Garett’s connected GitHub account.
