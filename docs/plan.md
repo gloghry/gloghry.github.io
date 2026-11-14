@@ -10,7 +10,7 @@
 - Atkinson Hyperlegible Next is the primary self-hosted typeface; code remains monospaced.
 - Slate/teal themes; avoid hard-to-read dark blue, dark red, and magenta on dark backgrounds. Light neutral body and secondary text in dark mode.
 - Follow OS theme initially; remember explicit theme selection. Underline links and show keyboard focus.
-- GitHub-only contact for now. Public email alias/forwarding is under consideration; do not publish the email from the Vim file.
+- Public contact is contact@garettloghry.com, approved by Garett with receiving and forwarding tested. Sending/replies remain unconfirmed in #34. GitHub and Garett's approved LinkedIn profile (https://www.linkedin.com/in/gloghry/) are linked. Do not use the old email from the Vim file.
 - Garett purchased garettloghry.com as the primary domain. DNS, Pages settings, HTTPS, and redirect verification are tracked in #21; see [domain setup](domain.md).
 - Analytics remain disabled.
 
@@ -18,7 +18,7 @@
 
 - Access to résumé repo and approval of public experience/skills details (#11, #12).
 - Real projects and permitted source material (#13).
-- Public email alias and LinkedIn URL (#14).
+- Remaining mailbox setup checks are tracked in #34; public email and LinkedIn are approved.
 - First technical article topic (#15).
 - Review colors in the browser and tune to Garett's reading comfort (#3, #10).
 
