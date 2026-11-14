@@ -12,6 +12,6 @@ description: Garett Loghry on his work, background, and interest in embedded sys
 <p>This site is a place to share my projects and write about what I’m learning along the way.</p>
 {% if site.email %}
 <h2>Contact</h2>
-<p>You can reach me at <a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a> or find my code on <a href="https://github.com/gloghry">GitHub</a>.</p>
+<p>You can reach me at <a href="mailto:{{ site.email | escape }}">{{ site.email | escape }}</a> or find me on {% if site.linkedin_url %}<a href="{{ site.linkedin_url | escape }}">LinkedIn</a> and {% endif %}<a href="https://github.com/gloghry">GitHub</a>.</p>
 {% endif %}
 </article>
