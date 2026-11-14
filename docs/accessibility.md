@@ -1,6 +1,6 @@
 # Responsive and accessibility audit
 
-Issues #9 and #10 cover layout and accessible use. Priority is separate from whether user input is needed; contact issue #14 is waiting on mailbox setup #34.
+Issues #9 and #10 cover layout and accessible use; #20 adds page-weight, initial-load stability, font, and reduced-motion measurements.
 
 ## Automated browser checks
 

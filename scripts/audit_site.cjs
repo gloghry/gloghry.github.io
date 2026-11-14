@@ -20,6 +20,7 @@ const routes = ['/', '/about/', '/projects/', '/writing/', '/404.html'];
 const widths = [320, 390, 768, 1024, 1440];
 const results = [];
 const failures = [];
+const performanceResults = [];
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function scenario(name, work) {
@@ -67,10 +68,102 @@ async function layout(page) {
     'Portrait failed loading, lacks intrinsic dimensions, or is lazy loaded');
 }
 
+async function performanceChecks(browser, name) {
+  for (const route of ['/', '/about/']) {
+    for (const width of [390, 1440]) {
+      const theme = width === 390 ? 'light' : 'dark';
+      await scenario(name + ' cold load ' + width + ' ' + route, async () => {
+        // Fresh contexts avoid cache effects. Delay fonts/photos to exercise their reserved layout.
+        const context = await browser.newContext({ colorScheme: theme, viewport: { width, height: 900 } });
+        try {
+          await context.addInitScript(() => {
+            window.__loadShifts = [];
+            window.__shiftSupported = typeof PerformanceObserver !== 'undefined' &&
+              PerformanceObserver.supportedEntryTypes.includes('layout-shift');
+            if (window.__shiftSupported) {
+              window.__shiftObserver = new PerformanceObserver(list => {
+                window.__loadShifts.push(...list.getEntries().map(entry => ({
+                  value: entry.value, time: entry.startTime, recentInput: entry.hadRecentInput
+                })));
+              });
+              window.__shiftObserver.observe({ type: 'layout-shift', buffered: true });
+            }
+          });
+          const page = await context.newPage();
+          const pendingResponses = [];
+          page.on('response', response => {
+            pendingResponses.push((async () => {
+              const body = await response.body();
+              return { url: response.url(), status: response.status(),
+                type: response.request().resourceType(), bodyBytes: body.length };
+            })());
+          });
+          await page.route(/\\.(woff2|jpe?g)(\\?|$)/, async request => {
+            await delay(200);
+            await request.continue();
+          });
+          assert.equal((await page.goto(base + route)).status(), 200);
+          await loaded(page);
+          await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+          const render = await page.evaluate(() => {
+            const pending = window.__shiftObserver ? window.__shiftObserver.takeRecords() : [];
+            const entries = window.__loadShifts.concat(pending.map(entry => ({
+              value: entry.value, time: entry.startTime, recentInput: entry.hadRecentInput
+            }))).filter(entry => !entry.recentInput).sort((a, b) => a.time - b.time);
+            let score = 0, session = 0, start = 0, last = 0;
+            for (const entry of entries) {
+              if (session > 0 && entry.time - last < 1000 && entry.time - start < 5000) {
+                session += entry.value;
+              } else {
+                session = entry.value;
+                start = entry.time;
+              }
+              last = entry.time;
+              score = Math.max(score, session);
+            }
+            return { loadCLS: window.__shiftSupported ? score : null,
+              fontFaces: Array.from(document.fonts).filter(font => font.family.includes('Atkinson Hyperlegible Next'))
+                .map(font => ({ status: font.status, display: font.display })) };
+          });
+          const responses = await Promise.all(pendingResponses);
+          const metric = { browser: name, route, width, theme, ...render,
+            totalBodyBytes: responses.reduce((sum, item) => sum + item.bodyBytes, 0),
+            scriptBodyBytes: responses.filter(item => item.type === 'script').reduce((sum, item) => sum + item.bodyBytes, 0),
+            resources: responses.map(item => ({ ...item, url: new URL(item.url).pathname })) };
+          performanceResults.push(metric);
+          console.log('PERF ' + JSON.stringify(metric));
+          assert(responses.every(item => new URL(item.url).origin === origin), 'Unexpected third-party request');
+          assert(responses.every(item => item.status < 400), 'A cold-load resource failed');
+          assert(metric.totalBodyBytes > 0, 'No response-body measurements were captured');
+          assert(render.fontFaces.some(font => font.status === 'loaded'), 'Custom font did not load');
+          assert(render.fontFaces.every(font => font.display === 'swap'), 'Font must keep swap display');
+          if (name === 'chromium') assert.notEqual(render.loadCLS, null, 'Layout-shift observation unavailable');
+          if (render.loadCLS !== null) assert(render.loadCLS <= 0.1, 'Initial-load layout shift exceeds 0.1');
+        } finally { await context.close(); }
+      });
+    }
+  }
+  await scenario(name + ' reduced motion', async () => {
+    const context = await browser.newContext({ reducedMotion: 'reduce', viewport: { width: 390, height: 900 } });
+    try {
+      const page = await context.newPage();
+      await page.goto(base + '/about/');
+      await loaded(page);
+      assert(await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches));
+      const animations = () => page.evaluate(() => document.getAnimations().filter(animation =>
+        animation.playState === 'running' || animation.playState === 'pending').length);
+      assert.equal(await animations(), 0, 'Unexpected motion with reduced-motion preference');
+      await page.locator('#theme-toggle').click();
+      assert.equal(await animations(), 0, 'Theme switch animates despite reduced-motion preference');
+    } finally { await context.close(); }
+  });
+}
+
 async function auditBrowser(browserType) {
   const name = browserType.name();
   const browser = await browserType.launch();
   try {
+    await performanceChecks(browser, name);
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({ colorScheme: theme });
       const page = await context.newPage();
@@ -208,7 +301,7 @@ async function main() {
     if (server) server.kill();
     if (temporaryRoot) await fs.rm(temporaryRoot, { recursive: true, force: true });
     await fs.writeFile(path.join(output, 'report.json'),
-      JSON.stringify({ basePath, passed: results.length, failures, results }, null, 2));
+      JSON.stringify({ basePath, passed: results.length, failures, results, performance: performanceResults }, null, 2));
   }
   if (failures.length) throw new Error(failures.length + ' browser audit scenario(s) failed; see ' + output);
   console.log(results.length + ' browser audit scenarios passed at ' + (basePath || '/') + '.');
