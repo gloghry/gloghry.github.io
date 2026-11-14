@@ -1,0 +1,29 @@
+name: Repository labels
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/labels.yml
+      - scripts/setup_labels.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: repository-labels
+  cancel-in-progress: false
+
+jobs:
+  setup:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reuse existing labels and create missing labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/setup_labels.py
