@@ -6,9 +6,9 @@ Issues #9 and #10 cover layout and accessible use; #20 adds page-weight, initial
 
 `scripts/audit_site.cjs` serves the generated `_site` locally inside CI and checks Chromium and WebKit. It honors `SITE_BASEURL` for both browser URLs and the local server mount; Jekyll's artifact directory remains independent of that URL prefix. `SITE_DIRECTORY` selects the generated-site directory and `AUDIT_OUTPUT_DIR` selects the report/screenshot destination. CI audits the configured path plus an alternate build, ensuring both domain-root and `/portfolio` deployment cases are covered. The alternate build is written outside the production artifact and is never deployed.
 
-It covers Home, About, Projects, Writing, and 404 pages at 320, 390, 768, 1024, and 1440 CSS pixels in both themes, plus 200% text reflow, long headings/code, portrait loading/dimensions, navigation targets, skip-link focus, keyboard theme control, preference persistence, system changes, storage failures, and no-JavaScript navigation.
+It covers Home, About, Projects, Writing, Résumé, and 404 pages at 320, 390, 768, 1024, and 1440 CSS pixels in both themes, plus 200% text reflow, long headings/code, portrait loading/dimensions, navigation targets, skip-link focus, keyboard theme control, preference persistence, system changes, storage failures, and no-JavaScript navigation.
 
-Axe checks WCAG A/AA rules on all five page types at the phone width in both themes. Automated checks do not prove full accessibility or replace testing with assistive technology and real devices.
+Axe checks WCAG A/AA rules on all six page types at the phone width in both themes. Automated checks do not prove full accessibility or replace testing with assistive technology and real devices.
 
 CI uploads screenshots and report.json in the **browser-audit** artifact, retained for seven days. This is a downloadable verification artifact, not a hosted branch preview (#44).
 

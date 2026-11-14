@@ -158,3 +158,26 @@ The design uses slate-and-teal light/dark themes, with underlined links and visi
 ## Portrait
 
 Garett selected `assets/images/originals/Plandid.jpg` for the About page. Run `python3 scripts/prepare_portrait.py` before local Jekyll preview/build; CI runs this step automatically. It creates `assets/images/garett.jpg` and `_data/portrait.yml` with metadata removed except necessary orientation. Pixel data is preserved without cropping or recompression. The original is about 277 KB. Both original uploads live in `assets/images/originals/`, which is excluded from the website output; they remain in repository history. The prepared image is sized responsively in CSS and supplies intrinsic dimensions to reserve layout space.
+
+## Public résumé delivery
+
+`/resume/` is the readable résumé; `/resume.pdf` is the stable PDF URL. Navigation
+and downloads use `relative_url` so project-site base paths work too. Both are
+served directly by this website: no browser-side GitHub credentials or dependency
+on Resume release downloads. The existing main-branch Pages workflow deploys
+these static files after checks; PRs build without deploying.
+
+For manual updates, build the explicit public variant in the Resume repo with
+`make public`. Review every PDF page, extracted text, links and metadata, then
+copy only `build/public/resume.pdf` into this repo's root `resume.pdf`. Update
+`resume/index.md` from the same reviewed content and record provenance in
+`docs/resume.md`. Never copy a repo directory, private variant, TeX source or
+build logs. Review the exact staged diff and publish through a PR.
+
+After deployment, check `/resume/` and `/resume.pdf` without authentication,
+confirm `application/pdf`, download/open on desktop and phone, and compare the
+PDF hash with the reviewed file. Keep the delivery issue open until these checks
+pass. Restore a known-good public version by reverting the PDF/page update in a
+new PR; Git history retains prior public PDF revisions. For this initial launch,
+revert the whole feature if there is no earlier good public PDF. Never make the
+Resume repo public to restore website delivery. Automation is Resume issue #22.
