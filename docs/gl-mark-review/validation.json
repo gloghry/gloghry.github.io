@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-15",
+  "site_source_commit": "8dd6156d6daab925ca38bd58ae309c86f595e48b",
+  "source_icon_commit": "1cb9cb05dcff95d71d4f21c2c146486178b542d7",
+  "python_site_tests": 33,
+  "browser_versions": {
+    "chromium": "159.0.8154.6",
+    "webkit": "27.2"
+  },
+  "widths": [
+    320,
+    390,
+    768,
+    1024,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "builds_and_link_checks": [
+    "/",
+    "/portfolio"
+  ],
+  "browser_audits": {
+    "/": {
+      "passed": 155,
+      "failures": [],
+      "cold_load_cls": [
+        {
+          "browser": "chromium",
+          "route": "/",
+          "width": 390,
+          "loadCLS": 0.02734155745489079
+        },
+        {
+          "browser": "chromium",
+          "route": "/",
+          "width": 1440,
+          "loadCLS": 0.001369041160300926
+        },
+        {
+          "browser": "chromium",
+          "route": "/about/",
+          "width": 390,
+          "loadCLS": 0.0005265151155428933
+        },
+        {
+          "browser": "chromium",
+          "route": "/about/",
+          "width": 1440,
+          "loadCLS": 0.0004547489537787209
+        },
+        {
+          "browser": "webkit",
+          "route": "/",
+          "width": 390,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/",
+          "width": 1440,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/about/",
+          "width": 390,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/about/",
+          "width": 1440,
+          "loadCLS": null
+        }
+      ]
+    },
+    "/portfolio": {
+      "passed": 155,
+      "failures": [],
+      "cold_load_cls": [
+        {
+          "browser": "chromium",
+          "route": "/",
+          "width": 390,
+          "loadCLS": 0.02734155745489079
+        },
+        {
+          "browser": "chromium",
+          "route": "/",
+          "width": 1440,
+          "loadCLS": 0.001369041160300926
+        },
+        {
+          "browser": "chromium",
+          "route": "/about/",
+          "width": 390,
+          "loadCLS": 0.0005265151155428933
+        },
+        {
+          "browser": "chromium",
+          "route": "/about/",
+          "width": 1440,
+          "loadCLS": 0.0004547489537787209
+        },
+        {
+          "browser": "webkit",
+          "route": "/",
+          "width": 390,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/",
+          "width": 1440,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/about/",
+          "width": 390,
+          "loadCLS": null
+        },
+        {
+          "browser": "webkit",
+          "route": "/about/",
+          "width": 1440,
+          "loadCLS": null
+        }
+      ]
+    }
+  },
+  "notes": "Local browsers used temporary shared libraries and standard Liberation Sans/Arial fallback fonts. Axe checks are automated coverage, not a substitute for assistive-technology or real-device review. No production deployment or merge performed."
+}

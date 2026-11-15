@@ -1,0 +1,25 @@
+{
+  "blender": "4.5.3 LTS",
+  "encoder": "Pillow 12.0.0",
+  "files": {
+    "favicon.svg": {
+      "bytes": 243,
+      "sha256": "fc9dfac04db9ff20603c401a4c49ad0f41fed62d3708daa763f590fd493d80a7"
+    },
+    "gl-mark.png": {
+      "bytes": 15401,
+      "sha256": "f41aa13ca7033b3cb0824c3a72a1728b7cc49b2ce81600d3488522773875dff6"
+    },
+    "gl-mark.webp": {
+      "bytes": 4966,
+      "sha256": "0f22eb6261f3c6efc82a0241234cecb98241912013ab29d5e1e7e2bc0011b964"
+    }
+  },
+  "height": 208,
+  "source_commit": "13223fe248db03a3f80d376c63a60251eb7df563",
+  "source_directory": "generated/original/web",
+  "source_render_sha256": "772b00f5258aafd9ee39b03db9919206edff1fc71fc6499e6d8de8487975fafd",
+  "source_repository": "https://github.com/gloghry/icon",
+  "variant": "original",
+  "width": 128
+}

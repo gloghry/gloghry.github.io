@@ -1,0 +1,128 @@
+{
+  "revision": "Approved longer foot: l_length 3.0 to 3.6 (+20%)",
+  "source_icon_commit": "13223fe248db03a3f80d376c63a60251eb7df563",
+  "site_source_base_commit": "75e06ecd83719317c5ca57344c383947750a515f",
+  "python_site_tests": 33,
+  "builds_and_link_checks": [
+    "/",
+    "/portfolio"
+  ],
+  "header_checks": {
+    "passed": 16,
+    "results": [
+      {
+        "browser": "chromium",
+        "theme": "light",
+        "width": 320,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "light",
+        "width": 1440,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "dark",
+        "width": 320,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "dark",
+        "width": 1440,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "light",
+        "width": 320,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "light",
+        "width": 1440,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "dark",
+        "width": 320,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "dark",
+        "width": 1440,
+        "basePath": "/",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "light",
+        "width": 320,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "light",
+        "width": 1440,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "dark",
+        "width": 320,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "chromium",
+        "theme": "dark",
+        "width": 1440,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "light",
+        "width": 320,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "light",
+        "width": 1440,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "dark",
+        "width": 320,
+        "basePath": "/portfolio",
+        "status": "passed"
+      },
+      {
+        "browser": "webkit",
+        "theme": "dark",
+        "width": 1440,
+        "basePath": "/portfolio",
+        "status": "passed"
+      }
+    ]
+  },
+  "scope": "Asset-only revision; header checks cover actual WebP load, dimensions, home-link name, themes, and overflow in Chromium and WebKit. Full site audits also run in hosted CI. The prior full baseline report remains in validation.json."
+}
