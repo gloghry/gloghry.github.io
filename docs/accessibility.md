@@ -18,6 +18,12 @@ CI uploads screenshots and report.json in the **browser-audit** artifact, retain
 
 ## Run locally
 
+Issue #18 adds the static GL sculpture and simplified favicon. Browser checks
+verify the accessible home-link name, actual WebP load, 128×208 intrinsic image
+dimensions, displayed mark height, visible owner name and favicon base path.
+Header screenshots (`*-header.png`) cover 320, 390 and 1440 px in both themes
+and browser engines. Source and regeneration details are in [gl-mark.md](gl-mark.md).
+
 First follow CONTRIBUTING.md to prepare fonts/portrait and build Jekyll. With Node 22+ available:
 
 ```sh

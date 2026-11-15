@@ -211,6 +211,29 @@ async function auditBrowser(browserType) {
             assert.equal(await page.locator('html').getAttribute('data-theme'), theme);
             assert.equal(await page.locator('h1').count(), 1);
             await layout(page);
+            if (route === '/') {
+              const home = page.getByRole('link', { name: 'Garett Loghry — home', exact: true });
+              assert.equal(await home.getAttribute('href'), basePath + '/');
+              const mark = home.locator('img.site-mark');
+              const image = await mark.evaluate(img => ({
+                width: img.naturalWidth, height: img.naturalHeight,
+                src: new URL(img.currentSrc).pathname, alt: img.alt,
+                box: { width: img.clientWidth, height: img.clientHeight }
+              }));
+              assert.equal(image.width, 128);
+              assert.equal(image.height, 208);
+              assert.equal(image.src, basePath + '/assets/images/gl/gl-mark.webp');
+              assert.equal(image.alt, '', 'Visible owner name supplies the link text');
+              assert(image.box.height >= 44 && image.box.height <= 52);
+              assert.match(await home.innerText(), /Garett Loghry/);
+              const favicon = page.locator('link[rel="icon"]');
+              assert.equal(await favicon.getAttribute('href'), basePath + '/assets/images/gl/favicon.svg');
+              if ([320, 390, 1440].includes(width)) {
+                await page.locator('.site-header').screenshot({
+                  path: path.join(output, name + '-' + theme + '-' + width + '-header.png')
+                });
+              }
+            }
             if (width === 390) {
               const accessibility = await new AxeBuilder({ page })
                 .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
