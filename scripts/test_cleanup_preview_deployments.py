@@ -1,7 +1,8 @@
 import unittest
+from unittest.mock import patch
 from datetime import datetime, timezone
 
-from cleanup_preview_deployments import classify
+from cleanup_preview_deployments import classify, cloudflare_deployments
 
 
 NOW = datetime(2026, 11, 15, 12, 0, tzinfo=timezone.utc)
@@ -34,6 +35,20 @@ def pull_request(number=27, state="closed", branch="15-writing",
 
 
 class CleanupClassificationTests(unittest.TestCase):
+    def test_lists_all_pages_using_provider_default_page_size(self):
+        with patch("cleanup_preview_deployments.cloudflare_get", side_effect=[
+            (200, [{"id": "first"}]),
+            (200, [{"id": "second"}]),
+            (200, []),
+        ]) as get:
+            self.assertEqual(cloudflare_deployments("account", "token"),
+                             [{"id": "first"}, {"id": "second"}])
+        self.assertEqual([call.args[3] for call in get.call_args_list], [
+            {"env": "preview", "page": 1},
+            {"env": "preview", "page": 2},
+            {"env": "preview", "page": 3},
+        ])
+
     def classify(self, item=None, prs=None, open_branches=None):
         return classify(item or deployment(), prs if prs is not None else [pull_request()],
                         open_branches or set(), "main", REPOSITORY, NOW)

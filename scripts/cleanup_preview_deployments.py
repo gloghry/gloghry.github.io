@@ -182,12 +182,14 @@ def cloudflare_deployments(account_id, token):
     all_deployments = []
     while True:
         _, deployments = cloudflare_get(path, account_id, token, {
-            "env": "preview", "page": page, "per_page": 100,
+            "env": "preview", "page": page,
         })
         if not isinstance(deployments, list):
             raise ApiError("Cloudflare returned an unexpected deployments list")
         all_deployments.extend(deployments)
-        if len(deployments) < 100:
+        # Use the provider's default page size; a short page is not proof
+        # that pagination is complete. Stop only on an empty page.
+        if not deployments:
             return all_deployments
         page += 1
 
