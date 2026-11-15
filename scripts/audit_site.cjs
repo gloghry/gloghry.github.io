@@ -182,7 +182,7 @@ async function auditBrowser(browserType) {
             await link.focus();
             const [popup, response] = await Promise.all([
               page.waitForEvent('popup'),
-              page.waitForResponse(response => response.url() === base + '/resume.pdf'),
+              context.waitForEvent('response', response => response.url() === base + '/resume.pdf'),
               page.keyboard.press('Enter'),
             ]);
             await popup.waitForLoadState('domcontentloaded');
