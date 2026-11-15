@@ -65,3 +65,13 @@ the existing accessibility, navigation, reflow and performance checks.
 
 Review those actual-background screenshots before merging this site change.
 Production remains unchanged until owner approval and merge.
+
+The checked review bundle is [gl-mark-review/](gl-mark-review/):
+[both themes at desktop/mobile sizes](gl-mark-review/headers.png), individual
+header captures, and native-size favicon sheets. [validation.json](gl-mark-review/validation.json)
+records the tested source commit, browser versions, viewports, build paths and
+results. Both final root and `/portfolio` audits pass 155 scenarios each;
+the site has 33 passing Python checks. The initial local cold-load failure
+also occurred on the unchanged site with the host's Nimbus Sans fallback;
+using the standard browser-test Liberation/Arial fallback resolved it without
+changing site typography or the test threshold.
