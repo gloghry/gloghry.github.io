@@ -242,10 +242,12 @@ async function auditBrowser(browserType) {
         await page.waitForURL(base + '/writing/');
         assert(!(await navigation.isVisible()));
         await page.setViewportSize({ width: 1440, height: 900 });
+        await toggle.waitFor({ state: 'hidden' });
         assert(!(await toggle.isVisible()));
         assert(await navigation.isVisible());
         await page.getByRole('link', { name: 'Projects', exact: true }).focus();
         await page.setViewportSize({ width: 390, height: 900 });
+        await page.waitForFunction(() => document.activeElement.id === 'navigation-toggle');
         assert.equal(await page.evaluate(() => document.activeElement.id), 'navigation-toggle');
         assert(!(await navigation.isVisible()));
       });
@@ -277,6 +279,7 @@ async function auditBrowser(browserType) {
         await page.locator('#navigation-toggle').click();
         await page.getByRole('link', { name: 'Projects', exact: true }).click();
         await page.waitForURL(base + '/projects/');
+        await page.locator('#navigation-toggle').click();
         assert.equal(await page.getByRole('link', { name: 'Projects', exact: true }).getAttribute('aria-current'), 'page');
       } finally { await context.close(); }
     });
