@@ -16,7 +16,7 @@ assert(basePath === '' || (basePath.startsWith('/') && segments.length > 0 &&
 const base = origin + basePath;
 const siteDirectory = path.resolve(process.env.SITE_DIRECTORY || '_site');
 const output = path.resolve(process.env.AUDIT_OUTPUT_DIR || 'audit-results');
-const routes = ['/', '/about/', '/projects/', '/writing/', '/resume/', '/copyright/', '/404.html'];
+const routes = ['/', '/about/', '/projects/', '/writing/', '/copyright/', '/404.html'];
 const widths = [320, 390, 768, 1024, 1440];
 const results = [];
 const failures = [];
@@ -167,18 +167,19 @@ async function auditBrowser(browserType) {
   const browser = await browserType.launch();
   try {
     await performanceChecks(browser, name);
-    for (const route of ['/about/', '/resume/']) {
+    for (const route of ['/', '/about/']) {
       for (const width of [390, 1440]) {
         await scenario(name + ' PDF opens in new context ' + width + ' ' + route, async () => {
           const context = await browser.newContext({ acceptDownloads: true, viewport: { width, height: 900 } });
           try {
             const page = await context.newPage();
             await page.goto(base + route);
-            const link = page.locator('main a[href="' + basePath + '/resume.pdf"]');
+            const link = page.locator((route === '/' ? '#site-navigation' : 'main') + ' a[href="' + basePath + '/resume.pdf"]');
             assert.equal(await link.getAttribute('target'), '_blank');
             assert((await link.getAttribute('rel')).split(/\s+/).includes('noopener'));
             assert((await link.getAttribute('aria-label')).includes('opens in a new tab'));
             assert.equal(await link.locator('svg.new-tab-icon').count(), 1);
+            if (route === '/' && width === 390) await page.locator('#navigation-toggle').click();
             await link.focus();
             const [popup, response] = await Promise.all([
               page.waitForEvent('popup'),
@@ -241,7 +242,7 @@ async function auditBrowser(browserType) {
                 id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target)
               })), [], 'Automated accessibility findings');
             }
-            if ((width === 320 || width === 1440) && (route === '/' || route === '/about/' || route === '/resume/' || route === '/copyright/')) {
+            if ((width === 320 || width === 1440) && (route === '/' || route === '/about/' || route === '/copyright/')) {
               const slug = route === '/' ? 'home' : route.slice(1, -1);
               await page.screenshot({ path: path.join(output, name + '-' + theme + '-' + width + '-' + slug + '.png'), fullPage: true });
             }
