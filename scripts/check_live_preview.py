@@ -16,10 +16,21 @@ def fetch(url):
         for name in ("server", "cf-mitigated", "cf-ray", "content-type", "via", "x-mitmproxy-blocked-reason"):
             print(name + ":", error.headers.get(name, "(absent)"), flush=True)
         body = error.read().decode("utf-8", errors="replace")
+        if error.headers.get("content-type", "").startswith("text/plain"):
+            print("Public error text:", body[:500], flush=True)
         title = re.search(r"<title[^>]*>(.*?)</title>", body, re.I | re.S)
         print("Error page title:", title.group(1)[:300] if title else "(none)", flush=True)
         raise
 
+
+for probe in ("https://gloghry-github-io.pages.dev/",
+              "https://68c123e7.gloghry-github-io.pages.dev/preview-check/",
+              "https://a32107aa.gloghry-github-io.pages.dev/preview-check/"):
+    try:
+        probe_status, _, _ = fetch(probe)
+        print("Probe", probe, probe_status, flush=True)
+    except HTTPError:
+        pass
 
 status, headers, page = fetch(PREVIEW + "/preview-check/")
 assert "Preview test version B." in page, "Branch alias did not serve version B"
