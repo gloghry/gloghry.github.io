@@ -44,7 +44,7 @@ async function loaded(page) {
 async function layout(page) {
   const measurements = await page.evaluate(() => {
     const root = document.documentElement;
-    const targets = Array.from(document.querySelectorAll('.site-header nav a, #theme-toggle'));
+    const targets = Array.from(document.querySelectorAll('.site-header nav a, #theme-toggle, #navigation-toggle'));
     return {
       overflow: root.scrollWidth - root.clientWidth,
       targets: targets.filter(el => el.getClientRects().length).map(el => {
@@ -209,7 +209,45 @@ async function auditBrowser(browserType) {
         await page.goto(base + '/about/');
         await loaded(page);
         await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+        await page.locator('#navigation-toggle').click();
         await layout(page);
+      });
+      await scenario(name + ' ' + theme + ' collapsible navigation', async () => {
+        await page.setViewportSize({ width: 390, height: 900 });
+        await page.goto(base + '/about/');
+        const toggle = page.locator('#navigation-toggle');
+        const navigation = page.locator('#site-navigation');
+        assert(await toggle.isVisible());
+        assert(!(await navigation.isVisible()));
+        assert.equal(await toggle.getAttribute('aria-expanded'), 'false');
+        await toggle.focus();
+        await page.keyboard.press('Enter');
+        assert.equal(await toggle.getAttribute('aria-expanded'), 'true');
+        await page.keyboard.press('Tab');
+        assert.equal(await page.evaluate(() => document.activeElement.textContent.trim()), 'Projects');
+        await layout(page);
+        const accessibility = await new AxeBuilder({ page })
+          .withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
+        assert.deepEqual(accessibility.violations.map(v => v.id), []);
+        await page.screenshot({ path: path.join(output, name + '-' + theme + '-navigation-open.png'), fullPage: true });
+        await page.keyboard.press('Escape');
+        assert(!(await navigation.isVisible()));
+        assert.equal(await page.evaluate(() => document.activeElement.id), 'navigation-toggle');
+        await page.keyboard.press('Space');
+        assert(await navigation.isVisible());
+        await page.locator('h1').click();
+        assert(!(await navigation.isVisible()));
+        await toggle.click();
+        await page.getByRole('link', { name: 'Writing', exact: true }).click();
+        await page.waitForURL(base + '/writing/');
+        assert(!(await navigation.isVisible()));
+        await page.setViewportSize({ width: 1440, height: 900 });
+        assert(!(await toggle.isVisible()));
+        assert(await navigation.isVisible());
+        await page.getByRole('link', { name: 'Projects', exact: true }).focus();
+        await page.setViewportSize({ width: 390, height: 900 });
+        assert.equal(await page.evaluate(() => document.activeElement.id), 'navigation-toggle');
+        assert(!(await navigation.isVisible()));
       });
       await context.close();
     }
@@ -236,6 +274,7 @@ async function auditBrowser(browserType) {
         assert(!(await page.locator('.theme-icon-moon').isVisible()));
         await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
         assert(await page.locator('.theme-icon-moon').isVisible());
+        await page.locator('#navigation-toggle').click();
         await page.getByRole('link', { name: 'Projects', exact: true }).click();
         await page.waitForURL(base + '/projects/');
         assert.equal(await page.getByRole('link', { name: 'Projects', exact: true }).getAttribute('aria-current'), 'page');
@@ -267,6 +306,7 @@ async function auditBrowser(browserType) {
           const page = await context.newPage();
           assert.equal((await page.goto(base + '/about/')).status(), 200);
           assert(!(await page.locator('#theme-toggle').isVisible()));
+          assert(!(await page.locator('#navigation-toggle').isVisible()));
           assert(await page.getByRole('link', { name: 'Projects', exact: true }).isVisible());
           await layout(page);
         } finally { await context.close(); }
