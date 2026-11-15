@@ -39,10 +39,13 @@ for probe in ("https://gloghry-github-io.pages.dev/",
 status, headers, page = fetch(PREVIEW + "/preview-check/")
 assert "Preview test version B." in page, "Branch alias did not serve version B"
 
-status, old_headers, old_page = fetch("https://68c123e7.gloghry-github-io.pages.dev/preview-check/")
-assert "Preview test version A." in old_page
-assert "Preview test version B." not in old_page
-print("PASS immutable deployment A retains version A")
+try:
+    fetch("https://68c123e7.gloghry-github-io.pages.dev/preview-check/")
+except HTTPError as error:
+    assert error.code in (404, 410), "Deletion must return 404/410, not an access denial"
+    print("PASS deleted deployment A no longer serves the marker:", error.code)
+else:
+    raise AssertionError("Deleted deployment A is still reachable")
 
 for path in ("/", "/about/", "/resume/", "/preview-check/"):
     status, headers, page = fetch(PREVIEW + path)
