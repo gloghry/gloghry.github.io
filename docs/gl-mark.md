@@ -6,11 +6,12 @@ sculpture reference, approved the geometry baseline, and directed its design;
 Codex implemented the model, static exports, and site integration.
 
 The source is the named `original` variant at commit
-[`1cb9cb05dcff95d71d4f21c2c146486178b542d7`](https://github.com/gloghry/icon/commit/1cb9cb05dcff95d71d4f21c2c146486178b542d7).
+[`13223fe248db03a3f80d376c63a60251eb7df563`](https://github.com/gloghry/icon/commit/13223fe248db03a3f80d376c63a60251eb7df563).
 Machine-readable provenance, image dimensions, and SHA-256 hashes are in
 [gl-mark-provenance.json](gl-mark-provenance.json). The G's left back ends at its
 lower bar; only its right return continues down as the square L stem, with the
-compact foot extending along +Y. The same continuous solid supplies front,
+compact foot extending along +Y. The approved follow-up extends total foot
+length 20%, from 3.0 to 3.6, with the G and camera settings preserved. The same continuous solid supplies front,
 side, and three-quarter previews.
 
 ## Static handoff
@@ -18,8 +19,8 @@ side, and three-quarter previews.
 Only these prebuilt files are served by Jekyll:
 
 - `assets/images/gl/gl-mark.webp` — 128×208 transparent optimized header image,
-  5,388 bytes; approximately 65% smaller than the PNG.
-- `assets/images/gl/gl-mark.png` — 128×208 RGBA fallback, 15,609 bytes.
+  4,966 bytes; approximately 68% smaller than the PNG.
+- `assets/images/gl/gl-mark.png` — 128×208 RGBA fallback, 15,401 bytes.
 - `assets/images/gl/favicon.svg` — simplified GL silhouette for small browser
   icons, with colors for light and dark system preferences.
 
@@ -70,8 +71,14 @@ The checked review bundle is [gl-mark-review/](gl-mark-review/):
 [both themes at desktop/mobile sizes](gl-mark-review/headers.png), individual
 header captures, and native-size favicon sheets. [validation.json](gl-mark-review/validation.json)
 records the tested source commit, browser versions, viewports, build paths and
-results. Both final root and `/portfolio` audits pass 155 scenarios each;
+results. The baseline full root and `/portfolio` audits passed 155 scenarios each;
 the site has 33 passing Python checks. The initial local cold-load failure
 also occurred on the unchanged site with the host's Nimbus Sans fallback;
 using the standard browser-test Liberation/Arial fallback resolved it without
 changing site typography or the test threshold.
+
+The approved longer-foot revision passes 33 Python checks, root/subpath builds
+and link checks, and 16 focused Chromium/WebKit header scenarios. Its refreshed
+header screenshots use the longer foot. See
+[longer-foot-validation.json](gl-mark-review/longer-foot-validation.json) for the
+revision, source commit and results. Full browser audits run again in PR CI.
