@@ -1,6 +1,6 @@
 """Disposable public-HTTP check for issue #44; never merge this test."""
 import time
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 import re
 
@@ -9,7 +9,11 @@ PREVIEW = "https://44-preview-verification.gloghry-github-io.pages.dev"
 
 def fetch(url):
     try:
-        with urlopen(url, timeout=20) as response:
+        request = Request(url, headers={
+            "User-Agent": "GarettLoghry-PreviewCheck/1.0 (+https://github.com/gloghry/gloghry.github.io/issues/44)",
+            "Accept": "text/html,application/xml;q=0.9,*/*;q=0.8",
+        })
+        with urlopen(request, timeout=20) as response:
             return response.status, response.headers, response.read().decode("utf-8")
     except HTTPError as error:
         print("HTTP failure URL:", url, "status:", error.code, flush=True)
