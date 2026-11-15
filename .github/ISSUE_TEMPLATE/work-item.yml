@@ -5,15 +5,16 @@ body:
     attributes:
       value: |
         Choose Bug, Feature, or Task in GitHub's issue type control and set the native Priority field when available.
-        Record effort and dates only when established. The optional priority answer below is a body fallback,
+        Set Effort as a provisional scope estimate and Start date when work begins; no Target/end date is required.
+        The optional priority answer below is a body fallback,
         not a native issue field. If using multiple representations, keep them consistent.
-        Priority is separate from effort and readiness. See CONTRIBUTING.md for field/label/body fallback rules.
+        Priority is separate from effort and readiness. Priority labels are retired; see CONTRIBUTING.md for field/body fallback rules.
         Keep private mailbox details, passwords, and other secrets out of public issues.
   - type: dropdown
     id: priority
     attributes:
       label: Priority
-      description: Optional body fallback when native fields and priority labels are unavailable. Do not use priority to represent missing input.
+      description: Optional temporary body fallback when native field access is unavailable. Do not use priority to represent missing input.
       multiple: false
       options:
         - Urgent (P0) — Highest priority

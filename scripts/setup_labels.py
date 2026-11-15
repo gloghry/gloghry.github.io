@@ -10,10 +10,6 @@ LABELS = [
     ("documentation", "0075ca", "Documentation or agent guidance"),
     ("maintenance", "ededed", "Dependencies, build tooling, or repository upkeep"),
     ("accessibility", "7057ff", "Removing an accessibility barrier"),
-    ("priority:P0", "b60205", "Highest priority; mirrors the linked issue"),
-    ("priority:P1", "d93f0b", "Near-term work; mirrors the linked issue"),
-    ("priority:P2", "fbca04", "Follow-up work; mirrors the linked issue"),
-    ("priority:P3", "c5def5", "Optional exploration; mirrors the linked issue"),
 ]
 
 

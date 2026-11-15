@@ -12,25 +12,26 @@
 
 ## Issue priorities
 
-- Use GitHub's standard issue types `Bug`, `Feature`, and `Task`; issue types are separate from the PR change-type labels below. Use the configured issue fields `Priority`, `Effort`, `Start date`, and `Target date` when available. Record effort and dates only when established; do not invent estimates or deadlines.
-- Set one priority per issue, preferring the configured Priority field. If unavailable through the current account or tool, use exactly one existing priority label. If neither can be set, use a Priority section in the body with a brief rationale (`## Priority` for API-created issues; `### Priority` from issue forms is accepted). Report unavailable fields/types and the setup or permissions needed; do not claim a label or form answer sets a native field.
-- Keep field, label, and body values consistent when more than one is present. Read the native Priority field first, then the priority label, then the body fallback. If any explicit values conflict, resolve the discrepancy before starting or labeling a PR; do not silently overwrite an owner decision. Preserve existing P0–P3 priorities using this equivalent mapping:
+- Use GitHub's standard issue types `Bug`, `Feature`, and `Task`; issue types are separate from the PR change-type labels below. Fill the native `Priority` and `Effort` fields. Estimate effort from scope, separately from priority: Low for focused edits, Medium for bounded features or substantial writing, High for larger work or unresolved integrations. Identify estimates as provisional and revise when scope becomes clearer.
+- Set `Start date` when work actually begins, using established history for existing work. Leave unstarted work undated; do not substitute the issue creation date unless it marks the start of work. Garett does not require an end/Target date; leave that field unchanged unless explicitly requested.
+- Set exactly one priority in the native Priority field on each issue. Priority labels are retired: do not create, apply, or recreate them. If a tool cannot read or set fields, use another authorized tool; otherwise report the limitation and record a temporary Priority section in the body with a brief rationale (`## Priority` for API-created issues; `### Priority` from issue forms is accepted). A body fallback is not a native field assignment; reconcile it when field access is available.
+- The native Priority field is the source of truth. Resolve conflicting explicit body values before starting; do not silently overwrite an owner decision. Historical P0–P3 body values remain valid context, using this mapping:
 
-| Priority field | Existing label | Use for |
+| Priority field | Historical equivalent | Use for |
 | --- | --- | --- |
-| Urgent | `priority:P0` | Release/promotion blockers and problems preventing basic use, including foundational usability/accessibility |
-| High | `priority:P1` | Near-term functionality, professional content, discovery, documentation, or workflow improvements |
-| Medium | `priority:P2` | Follow-up polish, secondary content/improvements, or organization |
-| Low | `priority:P3` | Optional exploration |
+| Urgent | P0 | Release/promotion blockers and problems preventing basic use, including foundational usability/accessibility |
+| High | P1 | Near-term functionality, professional content, discovery, documentation, or workflow improvements |
+| Medium | P2 | Follow-up polish, secondary content/improvements, or organization |
+| Low | P3 | Optional exploration |
 
 - Before starting, confirm priority, scope, dependencies, and missing inputs. Choose the highest-priority actionable work or unblock its prerequisite. Priority is separate from effort and readiness; it does not imply user input is required.
 - Preserve explicit priorities unless Garett authorizes reprioritization; record the rationale for deliberate changes. Do not rewrite completed issues' historical priorities.
-- When triaging, audit all open issues for missing or ambiguous priority values across fields, labels, and fallback bodies. API-created issues need their own metadata assignment; issue-form dropdowns do not validate API requests. Do not rewrite completed issues' historical priorities or bulk-migrate metadata without an explicit request.
+- When triaging, audit all open issues for missing or ambiguous native priorities and conflicting fallback bodies. API-created issues need their own metadata assignment; issue-form dropdowns do not validate API requests. Do not rewrite completed issues' historical priorities or bulk-migrate metadata without an explicit request.
 
 ## Pull request labels
 
-- Apply exactly one change-type label and one priority label when opening or updating a PR; follow the catalog and examples in [CONTRIBUTING.md](CONTRIBUTING.md#pull-request-labels).
-- Mirror the linked issue's resolved priority using the mapping above, choosing the highest priority for multiple issues (Urgent/P0 first). Resolve missing or ambiguous priorities rather than guessing. Recheck labels when scope changes and remove stale type/priority labels.
+- Apply exactly one change-type label when opening or updating a PR; follow the catalog and examples in [CONTRIBUTING.md](CONTRIBUTING.md#pull-request-labels). Preserve relevant area labels such as accessibility. Do not apply priority labels.
+- Set the PR's native Priority field from its linked issue, choosing the highest priority for multiple issues (Urgent first). Resolve missing or ambiguous priorities rather than guessing. Recheck fields and change-type labels when scope changes; preserve unrelated field values.
 - Verify applied labels. If a label is unavailable or setup cannot run, report that limitation and the setup step; do not claim completion. Preserve the attribution footer independently of labels.
 
 ## Pull request attribution

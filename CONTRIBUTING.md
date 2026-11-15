@@ -8,15 +8,15 @@ Every change, including documentation and maintenance, needs a GitHub issue. Reu
 
 ### Priority and readiness
 
-Use the standard GitHub issue type `Bug`, `Feature`, or `Task` and the configured `Priority`, `Effort`, `Start date`, and `Target date` fields when available. Set effort and dates only when established. Issue types describe work items; they do not replace the PR labels below.
+Use the standard GitHub issue type `Bug`, `Feature`, or `Task` and fill the native `Priority` and `Effort` fields. Estimate effort separately from importance: Low for focused edits, Medium for bounded features or substantial writing, High for larger work or unresolved integrations. These are provisional scope estimates, not promises about completion time. Set `Start date` when work actually begins, or from established history; unstarted work stays undated. A Target/end date is not required and should remain unchanged unless explicitly requested. Issue types describe work items; they do not replace the PR labels below.
 
-Priorities follow [AGENTS.md](AGENTS.md#issue-priorities): Urgent maps to P0, High to P1, Medium to P2, and Low to P3. Prefer the native Priority field; if it cannot be set, use one existing `priority:P0`–`priority:P3` label. If neither can be set, record the priority and rationale in the body (`## Priority` for API-created issues; issue forms' `### Priority` is also accepted). The Work item form offers an optional body fallback; it does not set the native field. Existing historical P0–P3 body values remain valid.
+Priorities follow [AGENTS.md](AGENTS.md#issue-priorities): Urgent, High, Medium, and Low correspond to historical P0, P1, P2, and P3 respectively. Set the native Priority field on issues and PRs. Priority labels are retired and must not be recreated. The Work item form offers an optional body fallback when field access is unavailable; it does not set the native field. Existing historical P0–P3 body values remain valid.
 
-Read the field first, then the label, then a body fallback. Explicit values must agree: resolve conflicts rather than silently choosing one. Report fields/types that cannot be read or set and what setup/access is missing. Do not expand permissions just to work around a tool limitation. Confirm dependencies and required input, preserve owner decisions, and keep priority separate from effort/readiness. Do not rewrite completed issues or bulk-migrate existing metadata as routine setup. API-created issues need their own metadata assignment; the web form does not validate them. See [GitHub's issue-field guidance](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-and-managing-issue-fields).
+The native Priority field is the source of truth. Resolve conflicting explicit body values rather than silently choosing one. If a tool lacks field support, use another authorized tool or report the setup/access missing and record a temporary body priority with a rationale. Reconcile body fallbacks into fields when access becomes available; do not treat a fallback as a successful field assignment. Do not expand permissions just to work around a tool limitation. Confirm dependencies and required input, preserve owner decisions, and keep priority separate from effort/readiness. Do not rewrite completed issues or bulk-migrate existing metadata as routine setup. API-created issues need their own metadata assignment; the web form does not validate them. See [GitHub's issue-field guidance](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-and-managing-issue-fields).
 
 ## Pull request labels
 
-Use exactly one change-type label and one priority label on each PR:
+Use exactly one change-type label on each PR and set its native Priority field:
 
 | Label | Use |
 | --- | --- |
@@ -24,15 +24,14 @@ Use exactly one change-type label and one priority label on each PR:
 | `bug` | Correcting unintended behavior |
 | `documentation` | Documentation or agent guidance without a product change |
 | `maintenance` | Dependencies, build tooling, or repository upkeep |
-| `priority:P0`–`priority:P3` | Linked issue's resolved priority: Urgent/P0, High/P1, Medium/P2, Low/P3 |
 
-Choose the type that describes the main result. For mixed changes, explain the supporting work in the PR description instead of adding multiple types. Take the highest priority (Urgent/P0 first) when a PR addresses multiple issues; do not infer it from effort or whether input is needed. Resolve the issue priority using the field/label/body rules above before assigning a PR priority. Keep the existing P0–P3 label catalog; adopting named fields does not require renaming labels.
+Choose the type that describes the main result. For mixed changes, explain the supporting work in the PR description instead of adding multiple types. Set the PR's Priority field to the highest linked issue priority (Urgent first); do not infer it from effort or whether input is needed. Preserve other field values when updating Priority. The repository's old priority labels have been retired in favor of fields.
 
 Use existing `accessibility` when relevant. Other area labels can wait until the PR volume makes them useful; do not invent labels per PR. Keep Codex assistance in the required attribution footer rather than adding another label.
 
-For example, this labeling-guidance PR uses `documentation` and `priority:P1`; a P0 theme-control bug uses `bug`, `priority:P0`, and `accessibility` when it removes an accessibility barrier. Review labels again when the scope or linked issue priority changes, removing stale type/priority labels while preserving unrelated labels.
+For example, an agent-guidance PR uses `documentation` with Priority set to High; a critical theme-control bug uses `bug` and `accessibility` with Priority set to Urgent when it prevents basic use. Review the field and change-type label when scope or linked priority changes, preserving unrelated labels.
 
-Filter Pull requests with `is:pr is:open label:"priority:P1"` or `is:pr label:documentation`. Verify the labels in the PR sidebar after applying them.
+Filter Pull requests with `is:pr is:open field.priority:high` or `is:pr label:documentation`. Verify the Priority field and labels in the PR sidebar after applying them. Field visibility follows the account's configuration; restricted fields are visible only to the owner and authorized collaborators.
 
 ### Label setup
 
