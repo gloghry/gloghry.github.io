@@ -4,28 +4,32 @@ body:
   - type: markdown
     attributes:
       value: |
-        Choose one priority and describe the work. Priority is separate from effort and readiness.
+        Choose Bug, Feature, or Task in GitHub's issue type control and set the native Priority field when available.
+        Set Effort as a provisional scope estimate and Start date when work begins; no Target/end date is required.
+        The optional priority answer below is a body fallback,
+        not a native issue field. If using multiple representations, keep them consistent.
+        Priority is separate from effort and readiness. Priority labels are retired; see CONTRIBUTING.md for field/body fallback rules.
         Keep private mailbox details, passwords, and other secrets out of public issues.
   - type: dropdown
     id: priority
     attributes:
       label: Priority
-      description: Select the appropriate level; do not use priority to represent missing input.
+      description: Optional temporary body fallback when native field access is unavailable. Do not use priority to represent missing input.
       multiple: false
       options:
-        - P0 — Highest priority
-        - P1 — Near-term
-        - P2 — Follow-up
-        - P3 — Optional exploration
+        - Urgent (P0) — Highest priority
+        - High (P1) — Near-term
+        - Medium (P2) — Follow-up
+        - Low (P3) — Optional exploration
     validations:
-      required: true
+      required: false
   - type: textarea
     id: rationale
     attributes:
       label: Priority rationale
-      description: Why does this work belong at the selected priority?
+      description: Explain the priority if using the body fallback, or record a deliberate priority change.
     validations:
-      required: true
+      required: false
   - type: textarea
     id: scope
     attributes:
