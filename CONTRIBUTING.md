@@ -96,7 +96,7 @@ Site tooling must honor both root and subpath deployments. Jekyll's output files
 
 In repository Settings → Pages, select **GitHub Actions** as the source.
 
-Pull requests run regression tests, build Jekyll, and check internal links. They do not publish a preview or deploy the production site. Merging to `main` runs the same checks, uploads the generated `_site` artifact, and deploys through the `github-pages` environment. The workflow can also be started manually; deployment runs only for `main`.
+Pull requests run regression tests, build Jekyll, and check internal links. GitHub Actions does not publish previews or deploy production from a PR. Public Cloudflare previews use a separate Git integration once the owner connects it; see [preview setup, verification, and removal](docs/previews.md). Merging to `main` runs the same checks, uploads the generated `_site` artifact, and deploys through the `github-pages` environment. The workflow can also be started manually; deployment runs only for `main`.
 
 Repository rules require the `build` status check and a pull request; only squash merges are allowed. The `github-pages` environment may require approval depending on its settings. Confirm the Actions run and https://garettloghry.com after deployment.
 

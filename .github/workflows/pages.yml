@@ -33,6 +33,15 @@ jobs:
           JEKYLL_ENV: production
       - name: Check internal links
         run: python3 scripts/check_links.py _site --baseurl "$SITE_BASEURL"
+      - name: Check Cloudflare preview builds at root and subpath
+        run: |
+          python3 scripts/build_preview.py --url "https://ci-preview.pages.dev" --destination "$RUNNER_TEMP/preview-root"
+          python3 scripts/build_preview.py --url "https://ci-preview.pages.dev" --baseurl "/portfolio" --destination "$RUNNER_TEMP/preview-subpath"
+          test ! -e _site/_headers
+          if rg -q 'name="robots" content="noindex' _site/index.html; then
+            echo "Preview robots metadata leaked into production output"
+            exit 1
+          fi
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
