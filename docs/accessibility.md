@@ -8,6 +8,8 @@ Issues #9 and #10 cover layout and accessible use; #20 adds page-weight, initial
 
 It covers Home, About, Projects, Writing, Résumé, and 404 pages at 320, 390, 768, 1024, and 1440 CSS pixels in both themes, plus 200% text reflow, long headings/code, portrait loading/dimensions, navigation targets, skip-link focus, keyboard theme control, preference persistence, system changes, storage failures, and no-JavaScript navigation.
 
+Issue #64 adds compact-navigation checks in both themes: Enter/Space activation, expanded state, tab access to links, Escape with focus return, outside-click closing, link navigation, and resizing between compact and desktop headers. The open menu receives an accessibility scan and screenshot; enlarged-text checks also open the menu. Below 52rem the menu collapses when JavaScript is available; wider screens retain visible links. Without JavaScript, navigation links remain visible.
+
 Axe checks WCAG A/AA rules on all six page types at the phone width in both themes. Automated checks do not prove full accessibility or replace testing with assistive technology and real devices.
 
 CI uploads screenshots and report.json in the **browser-audit** artifact, retained for seven days. This is a downloadable verification artifact, not a hosted branch preview (#44).
