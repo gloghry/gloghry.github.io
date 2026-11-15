@@ -17,3 +17,10 @@ The site is still taking shape. For now, you can learn more about me there or [e
 This repository contains the Jekyll source for the website, published through GitHub Pages. The design stays simple so the projects and writing can take the space they need.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, checks, publishing, and adding content. [Design and launch notes](docs/plan.md) track the site’s direction and outstanding work.
+
+## Reuse
+
+The website code and its technical documentation use the [MIT license](LICENSE).
+My writing, résumé, PDF, and photographs are excluded; my original content is
+reserved. Fonts and other third-party material keep their own licenses. See
+[Copyright & credits](https://garettloghry.com/copyright/) for details.
