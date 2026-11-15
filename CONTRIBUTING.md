@@ -8,9 +8,11 @@ Every change, including documentation and maintenance, needs a GitHub issue. Reu
 
 ### Priority and readiness
 
-Use the Work item issue form to select exactly one priority and explain why. Priorities are defined in [AGENTS.md](AGENTS.md#issue-priorities): P0 is highest priority, P1 near-term, P2 follow-up, and P3 optional exploration. Priority is separate from effort or whether an issue needs user input.
+Use the standard GitHub issue type `Bug`, `Feature`, or `Task` and the configured `Priority`, `Effort`, `Start date`, and `Target date` fields when available. Set effort and dates only when established. Issue types describe work items; they do not replace the PR labels below.
 
-For API-created issues, include a `## Priority` section with a P0–P3 value and short rationale. GitHub forms render the equivalent field under `### Priority`; both are accepted. Confirm dependencies and required input before starting, preserve existing priority decisions, and do not invent missing content to unblock work.
+Priorities follow [AGENTS.md](AGENTS.md#issue-priorities): Urgent maps to P0, High to P1, Medium to P2, and Low to P3. Prefer the native Priority field; if it cannot be set, use one existing `priority:P0`–`priority:P3` label. If neither can be set, record the priority and rationale in the body (`## Priority` for API-created issues; issue forms' `### Priority` is also accepted). The Work item form offers an optional body fallback; it does not set the native field. Existing historical P0–P3 body values remain valid.
+
+Read the field first, then the label, then a body fallback. Explicit values must agree: resolve conflicts rather than silently choosing one. Report fields/types that cannot be read or set and what setup/access is missing. Do not expand permissions just to work around a tool limitation. Confirm dependencies and required input, preserve owner decisions, and keep priority separate from effort/readiness. Do not rewrite completed issues or bulk-migrate existing metadata as routine setup. API-created issues need their own metadata assignment; the web form does not validate them. See [GitHub's issue-field guidance](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/adding-and-managing-issue-fields).
 
 ## Pull request labels
 
@@ -22,9 +24,9 @@ Use exactly one change-type label and one priority label on each PR:
 | `bug` | Correcting unintended behavior |
 | `documentation` | Documentation or agent guidance without a product change |
 | `maintenance` | Dependencies, build tooling, or repository upkeep |
-| `priority:P0`–`priority:P3` | Priority from the linked issue's Priority section |
+| `priority:P0`–`priority:P3` | Linked issue's resolved priority: Urgent/P0, High/P1, Medium/P2, Low/P3 |
 
-Choose the type that describes the main result. For mixed changes, explain the supporting work in the PR description instead of adding multiple types. Take the highest priority (lowest number) when a PR addresses multiple issues; do not infer it from effort or whether input is needed. The issue body remains the source of truth. Resolve a missing or ambiguous issue priority before assigning a PR priority.
+Choose the type that describes the main result. For mixed changes, explain the supporting work in the PR description instead of adding multiple types. Take the highest priority (Urgent/P0 first) when a PR addresses multiple issues; do not infer it from effort or whether input is needed. Resolve the issue priority using the field/label/body rules above before assigning a PR priority. Keep the existing P0–P3 label catalog; adopting named fields does not require renaming labels.
 
 Use existing `accessibility` when relevant. Other area labels can wait until the PR volume makes them useful; do not invent labels per PR. Keep Codex assistance in the required attribution footer rather than adding another label.
 
