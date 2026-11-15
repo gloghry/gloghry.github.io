@@ -4,14 +4,12 @@ Website issue #12; delivery tracker gloghry/Resume#21.
 
 ## PDF download behavior
 
-Issue #77 changes the About and résumé PDF links to open `/resume/download/`
-in a new tab, with a visible new-tab warning and `rel="noopener"`. That page
-requests a same-origin download of `/resume.pdf` as `garett-loghry-resume.pdf`.
-The stable PDF URL and its contents are unchanged. A visible download link
-works without JavaScript and remains available if an automatic download is
-blocked. Browser/user settings still control prompts, saving, and external
-PDF handling; the page does not claim that a file was saved successfully.
-All page, asset, and PDF links honor Jekyll's deployment base path.
+Issue #77 makes the About and résumé PDF links open the stable `/resume.pdf`
+directly in a new tab, with an external-link icon and an accessible new-tab
+announcement. The PDF response and contents are unchanged. The browser's PDF
+viewer can be used to download or print the document; whether the browser opens
+its viewer or downloads the file depends on browser settings. The links use
+Jekyll's `relative_url` filter and honor deployment base paths.
 
 ## Public PDF source
 

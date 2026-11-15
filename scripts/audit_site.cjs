@@ -16,7 +16,7 @@ assert(basePath === '' || (basePath.startsWith('/') && segments.length > 0 &&
 const base = origin + basePath;
 const siteDirectory = path.resolve(process.env.SITE_DIRECTORY || '_site');
 const output = path.resolve(process.env.AUDIT_OUTPUT_DIR || 'audit-results');
-const routes = ['/', '/about/', '/projects/', '/writing/', '/resume/', '/resume/download/', '/copyright/', '/404.html'];
+const routes = ['/', '/about/', '/projects/', '/writing/', '/resume/', '/copyright/', '/404.html'];
 const widths = [320, 390, 768, 1024, 1440];
 const results = [];
 const failures = [];
@@ -169,56 +169,31 @@ async function auditBrowser(browserType) {
     await performanceChecks(browser, name);
     for (const route of ['/about/', '/resume/']) {
       for (const width of [390, 1440]) {
-        await scenario(name + ' PDF download in new tab ' + width + ' ' + route, async () => {
+        await scenario(name + ' PDF opens in new tab ' + width + ' ' + route, async () => {
           const context = await browser.newContext({ acceptDownloads: true, viewport: { width, height: 900 } });
           try {
             const page = await context.newPage();
             await page.goto(base + route);
-            const link = page.locator('main a[href="' + basePath + '/resume/download/"]');
+            const link = page.locator('main a[href="' + basePath + '/resume.pdf"]');
             assert.equal(await link.getAttribute('target'), '_blank');
             assert((await link.getAttribute('rel')).split(/\s+/).includes('noopener'));
-            assert((await link.textContent()).includes('opens in a new tab'));
+            assert((await link.getAttribute('aria-label')).includes('opens in a new tab'));
+            assert.equal(await link.locator('svg.new-tab-icon').count(), 1);
             await link.focus();
-            // Listen before clicking: the new page requests the file during load.
-            const downloaded = new Promise((resolve, reject) => {
-              const timeout = setTimeout(() => reject(new Error('Automatic PDF download did not start')), 15000);
-              context.once('page', popup => popup.once('download', download => {
-                clearTimeout(timeout);
-                resolve(download);
-              }));
-            });
-            const [popup, download] = await Promise.all([
-              context.waitForEvent('page'), downloaded, page.keyboard.press('Enter'),
+            const [popup, response] = await Promise.all([
+              page.waitForEvent('popup'),
+              page.waitForResponse(response => response.url() === base + '/resume.pdf'),
+              page.keyboard.press('Enter'),
             ]);
             await popup.waitForLoadState('domcontentloaded');
             assert.equal(page.url(), base + route, 'Original page was replaced');
-            assert.equal(popup.url(), base + '/resume/download/');
+            assert.equal(popup.url(), base + '/resume.pdf');
             assert.equal(await popup.evaluate(() => window.opener), null);
-            assert.equal(download.suggestedFilename(), 'garett-loghry-resume.pdf');
-            assert.equal(download.url(), base + '/resume.pdf');
-            assert.equal(await download.failure(), null);
-            const bytes = await fs.readFile(await download.path());
-            assert(bytes.equals(await fs.readFile(path.join(siteDirectory, 'resume.pdf'))));
-            await layout(popup);
+            assert.match(response.headers()['content-type'], /^application\/pdf(?:;|$)/i);
           } finally { await context.close(); }
         });
       }
     }
-    await scenario(name + ' PDF download without JavaScript', async () => {
-      const context = await browser.newContext({ javaScriptEnabled: false, acceptDownloads: true });
-      try {
-        const page = await context.newPage();
-        await page.goto(base + '/resume/download/');
-        const [download] = await Promise.all([
-          page.waitForEvent('download'), page.locator('#resume-download').click(),
-        ]);
-        assert.equal(page.url(), base + '/resume/download/');
-        assert.equal(download.suggestedFilename(), 'garett-loghry-resume.pdf');
-        assert.equal(await download.failure(), null);
-        assert((await fs.readFile(await download.path())).equals(
-          await fs.readFile(path.join(siteDirectory, 'resume.pdf'))));
-      } finally { await context.close(); }
-    });
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({ colorScheme: theme });
       const page = await context.newPage();
