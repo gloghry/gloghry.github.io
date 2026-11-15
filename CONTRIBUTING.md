@@ -162,17 +162,15 @@ Garett selected `assets/images/originals/Plandid.jpg` for the About page. Run `p
 
 ## Public résumé delivery
 
-`/resume/` is the readable résumé; `/resume.pdf` is the stable PDF URL. Navigation
-and downloads use `relative_url` so project-site base paths work too. Both are
+`/resume.pdf` is the résumé, linked as “Resume (PDF)” in a new tab. The old
+`/resume/` route redirects to the PDF. Navigation and links use `relative_url` so project-site base paths work too. Both are
 served directly by this website: no browser-side GitHub credentials or dependency
 on Resume release downloads. The existing main-branch Pages workflow deploys
 these static files after checks; PRs build without deploying.
 
 For manual updates, build the explicit public variant in the Resume repo with
 `make public`. Review every PDF page, extracted text, links and metadata, then
-copy only `build/public/resume.pdf` into this repo's root `resume.pdf`. Update
-`resume/index.md` from the same reviewed content and record provenance in
-`docs/resume.md`. Never copy a repo directory, private variant, TeX source or
+copy only `build/public/resume.pdf` into this repo's root `resume.pdf`. Record provenance in `docs/resume.md`. Never copy a repo directory, private variant, TeX source or
 build logs. Review the exact staged diff and publish through a PR.
 
 After deployment, check `/resume/` and `/resume.pdf` without authentication,
