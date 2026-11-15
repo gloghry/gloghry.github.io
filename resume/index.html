@@ -1,22 +1,61 @@
 ---
-layout: null
-sitemap: false
+title: Résumé
+description: Garett Loghry’s software engineering experience, technical skills, and education.
 ---
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0;url={{ '/resume.pdf' | relative_url }}">
-  {% if site.preview %}
-  <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="{{ site.production_url }}/resume.pdf">
-  {% else %}
-  <link rel="canonical" href="{{ '/resume.pdf' | absolute_url }}">
-  {% endif %}
-  <title>Resume (PDF) · Garett Loghry</title>
-</head>
-<body>
-  <p><a href="{{ '/resume.pdf' | relative_url }}">Open resume (PDF)</a></p>
-</body>
-</html>
+<article class="prose">
+<header class="page-heading"><h1>Résumé</h1></header>
+<p><a href="{{ '/resume.pdf' | relative_url }}">Download résumé — PDF</a></p>
+<section><h2>Summary</h2>
+<p>Software engineer with experience writing embedded C, implementing communication protocols over CAN, and developing C#/.NET tools for controller programming and diagnostics.</p>
+</section>
+<section><h2>Technical Skills</h2>
+<p><strong>Languages:</strong> C, C#, Python <br></p>
+<p><strong>Embedded:</strong> CAN, CANopen, FreeRTOS; C integration with Simulink <br></p>
+<p><strong>Tools:</strong> .NET, Git, CANalyzer, Vector CAN hardware <br></p>
+<p><strong>Testing:</strong> CMock, NUnit, hardware validation, CAN trace analysis <br></p>
+<p><strong>Development:</strong> Ubuntu/Linux, Jenkins build troubleshooting, Azure DevOps</p>
+</section>
+<section><h2>Professional Experience</h2>
+<p><strong>Hyster-Yale Materials Handling</strong>  ·  Aug 2024 - Present <br></p>
+<p>Software Engineer 1</p>
+<p><em>Global Tools Team</em>  ·  Jan 2026 - Present</p>
+<ul>
+<li>Implemented a CAN communication protocol for controller programming.</li>
+<li>Develop C#/.NET desktop tools for controller programming and diagnostics in manufacturing.</li>
+<li>Build CAN controller harnesses and prototype connections; validate programming on physical hardware.</li>
+<li>Used CAN traffic analysis to investigate intermittent controller-programming failures.</li>
+</ul>
+<p><em>Innovation Team</em>  ·  Aug 2024 - Dec 2025</p>
+<ul>
+<li>Developed C middleware on an ARM-based ECU to connect CAN bus data to a Simulink model, handle CANopen messages, and expose debugging signals.</li>
+</ul>
+<p><strong>Music World</strong>  ·  Oct 2013 - Jan 2025 <br></p>
+<p>Assistant Manager  ·  <em>Vancouver, WA</em></p>
+<ul>
+<li>Led weekend store operations, supervised associates, and trained and mentored staff.</li>
+<li>Created training guides and checklists to support employee onboarding and consistent store procedures.</li>
+</ul>
+</section>
+<section><h2>Academic Experience</h2>
+<p><strong>Software Engineering Capstone</strong>  ·  Sept 2022 - May 2023 <br></p>
+<p>Industry-sponsored project with Seasalt.AI</p>
+<ul>
+<li>Adapted existing speech-recognition pipelines in Python for Vietnamese and Indonesian.</li>
+<li>Contributed failure-notification hooks for long-running pipeline runs.</li>
+</ul>
+<p><strong>Embedded Systems Coursework</strong>  ·  Washington State University</p>
+<ul>
+<li>Used C and FreeRTOS on Raspberry Pi Pico/RP2040 for GPIO control, tasks, and queues.</li>
+<li>SPI exercises covered read/write routines and passing GPIO interrupt data to a task through a queue.</li>
+<li>Used Ubuntu and Bash scripts for development automation during college.</li>
+</ul>
+</section>
+<section><h2>Education</h2>
+<p><strong>B.S. in Computer Science</strong>  ·  Fall 2023 <br></p>
+<p>Washington State University  ·  <em>Vancouver, WA</em></p>
+</section>
+<section><h2>Contact</h2>
+<p><a href="https://garettloghry.com">garettloghry.com</a>  ·  Vancouver, WA  ·  <a href="mailto:contact@garettloghry.com">contact@garettloghry.com</a></p>
+<p><a href="https://github.com/gloghry">github.com/gloghry</a>  ·  <a href="https://www.linkedin.com/in/gloghry/">linkedin.com/in/gloghry/</a></p>
+</section>
+</article>
