@@ -1,0 +1,48 @@
+name: Clean up expired Cloudflare previews
+
+on:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Report eligible deployments without deleting them
+        type: boolean
+        default: true
+        required: true
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: cloudflare-preview-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      DELETE_EXPIRED_PREVIEWS: ${{ (github.event_name == 'schedule' && vars.CLOUDFLARE_PREVIEW_CLEANUP_ENABLED == 'true') || (github.event_name == 'workflow_dispatch' && inputs.dry_run == false) }}
+      GITHUB_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Check cleanup credentials
+        id: credentials
+        run: |
+          if [ -z "$CLOUDFLARE_ACCOUNT_ID" ] || [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning::Cloudflare cleanup credentials are not configured; no deployments were inspected or deleted."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Review or remove expired deployments
+        if: steps.credentials.outputs.configured == 'true'
+        run: python3 scripts/cleanup_preview_deployments.py
