@@ -8,7 +8,12 @@ sitemap: false
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="refresh" content="0;url={{ '/resume.pdf' | relative_url }}">
+  {% if site.preview %}
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="{{ site.production_url }}/resume.pdf">
+  {% else %}
   <link rel="canonical" href="{{ '/resume.pdf' | absolute_url }}">
+  {% endif %}
   <title>Resume (PDF) · Garett Loghry</title>
 </head>
 <body>
