@@ -1,13 +1,24 @@
 """Disposable public-HTTP check for issue #44; never merge this test."""
 import time
 from urllib.request import urlopen
+from urllib.error import HTTPError
+import re
 
 PREVIEW = "https://44-preview-verification.gloghry-github-io.pages.dev"
 
 
 def fetch(url):
-    with urlopen(url, timeout=20) as response:
-        return response.status, response.headers, response.read().decode("utf-8")
+    try:
+        with urlopen(url, timeout=20) as response:
+            return response.status, response.headers, response.read().decode("utf-8")
+    except HTTPError as error:
+        print("HTTP failure URL:", url, "status:", error.code, flush=True)
+        for name in ("server", "cf-mitigated", "cf-ray", "content-type", "via", "x-mitmproxy-blocked-reason"):
+            print(name + ":", error.headers.get(name, "(absent)"), flush=True)
+        body = error.read().decode("utf-8", errors="replace")
+        title = re.search(r"<title[^>]*>(.*?)</title>", body, re.I | re.S)
+        print("Error page title:", title.group(1)[:300] if title else "(none)", flush=True)
+        raise
 
 
 status, headers, page = fetch(PREVIEW + "/preview-check/")
