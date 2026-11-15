@@ -16,7 +16,7 @@ assert(basePath === '' || (basePath.startsWith('/') && segments.length > 0 &&
 const base = origin + basePath;
 const siteDirectory = path.resolve(process.env.SITE_DIRECTORY || '_site');
 const output = path.resolve(process.env.AUDIT_OUTPUT_DIR || 'audit-results');
-const routes = ['/', '/about/', '/projects/', '/writing/', '/resume/', '/404.html'];
+const routes = ['/', '/about/', '/projects/', '/writing/', '/resume/', '/copyright/', '/404.html'];
 const widths = [320, 390, 768, 1024, 1440];
 const results = [];
 const failures = [];
@@ -188,7 +188,7 @@ async function auditBrowser(browserType) {
                 id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target)
               })), [], 'Automated accessibility findings');
             }
-            if ((width === 320 || width === 1440) && (route === '/' || route === '/about/' || route === '/resume/')) {
+            if ((width === 320 || width === 1440) && (route === '/' || route === '/about/' || route === '/resume/' || route === '/copyright/')) {
               const slug = route === '/' ? 'home' : route.slice(1, -1);
               await page.screenshot({ path: path.join(output, name + '-' + theme + '-' + width + '-' + slug + '.png'), fullPage: true });
             }

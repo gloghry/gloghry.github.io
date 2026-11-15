@@ -96,7 +96,7 @@ code { font-family:ui-monospace,monospace; font-size:.9em; }
 blockquote { margin-inline:0; padding-left:1.5rem; border-left:3px solid var(--accent); }
 img { max-width:100%; height:auto; }
 .site-footer { display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:5rem; padding-block:2rem; border-top:1px solid var(--line); font-size:.9rem; color:var(--muted); }
-.site-footer span { margin-right:auto; }
+.site-footer .footer-copyright { margin-right:auto; color:var(--muted); }
 .site-footer a { min-width:0; max-width:100%; overflow-wrap:anywhere; }
 /* Keep the compact-navigation breakpoint synchronized with navigation.js. */
 @media (max-width:52rem) {
