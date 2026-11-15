@@ -57,9 +57,13 @@ CI tests generated previews at both the domain root and `/portfolio`, alongside 
 
 ## Cleanup and accidental publication
 
-Routine cleanup is explicit: after a PR closes, remove obsolete preview deployments from Cloudflare. This implementation does not yet automate provider cleanup. Record the first tested cleanup in #44 before closing the issue.
+Issue #61 adds a daily GitHub Actions cleanup workflow for this Pages project. It starts in dry-run mode: the workflow lists preview deployments, maps each commit to a same-repository PR, and reports the eligibility decision. It preserves deployments on open-PR branches, production deployments, ambiguous/unmapped deployments, deployments within seven days of PR closure, and deployments that still have aliases. It never uses Cloudflare's `force` option. If Cloudflare refuses a deletion or the follow-up check cannot confirm a 404, the run reports a failure rather than treating an HTTP 403 as deletion.
 
-Cloudflare's current documentation says the latest deployment for a branch cannot be deleted. A newer deployment changes the branch alias, but the older immutable deployment URL remains until explicitly deleted.
+To enable inspection, add the `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` repository Actions secrets. The token needs Pages Read for dry runs and Pages Write for deletion; scope it to the account/project as narrowly as Cloudflare allows. The workflow is restricted to `main`, uses GitHub's read-only pull-request permission, and does not run for pull requests. With credentials configured, first run **Clean up expired Cloudflare previews** manually with `dry_run` enabled and review the complete log. Test deletion on a harmless disposable deployment before enabling scheduled deletion by setting the repository Actions variable `CLOUDFLARE_PREVIEW_CLEANUP_ENABLED` to `true`. A manual run with `dry_run` disabled also requests deletion. Leave the variable unset or false to keep the daily schedule in report-only mode.
+
+The project name is fixed in the cleanup script to `gloghry-github-io`; the production branch and connected repository are validated against Cloudflare before any deletion. An unconfigured workflow warns and exits without inspecting or deleting deployments. No expiry can be claimed until credentials are configured and a live disposable deletion is confirmed. Keep #61 open until that live verification and the setup are complete.
+
+Cloudflare's current documentation says the latest deployment for a branch cannot be deleted. A newer deployment changes the branch alias, but the older immutable deployment URL remains until explicitly deleted. See [Cloudflare's preview deployment deletion rules](https://developers.cloudflare.com/pages/configuration/preview-deployments/) and [deployment API](https://developers.cloudflare.com/api/resources/pages/subresources/projects/subresources/deployments/).
 
 If sensitive material reaches a preview:
 
