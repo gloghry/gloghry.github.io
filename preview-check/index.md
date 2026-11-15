@@ -4,7 +4,7 @@ title: Preview verification
 <article class="prose" markdown="1">
 # Preview verification
 
-Preview test version A.
+Preview test version B.
 
 This temporary page checks branch preview updates and removal for issue #44. It contains no private information and will not be merged into the live site.
 
