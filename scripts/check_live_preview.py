@@ -10,16 +10,8 @@ def fetch(url):
         return response.status, response.headers, response.read().decode("utf-8")
 
 
-for attempt in range(24):
-    try:
-        status, headers, page = fetch(PREVIEW + "/preview-check/")
-        if "Preview test version B." in page:
-            break
-    except Exception:
-        pass
-    time.sleep(10)
-else:
-    raise RuntimeError("Cloudflare preview did not update to version B in four minutes")
+status, headers, page = fetch(PREVIEW + "/preview-check/")
+assert "Preview test version B." in page, "Branch alias did not serve version B"
 
 status, old_headers, old_page = fetch("https://68c123e7.gloghry-github-io.pages.dev/preview-check/")
 assert "Preview test version A." in old_page
