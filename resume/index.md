@@ -5,7 +5,7 @@ description: Garett Loghry’s software engineering experience, technical skills
 <article class="prose" markdown="1">
 <header class="page-heading"><h1>Résumé</h1></header>
 
-[Download résumé — PDF]({{ '/resume.pdf' | relative_url }})
+<a href="{{ '/resume.pdf' | relative_url }}" target="_blank" rel="noopener" aria-label="Download résumé PDF (opens in a new tab)">Download résumé — PDF <svg class="new-tab-icon" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M9 2h5v5M14 2 7 9M12 9v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 
 Software engineer with experience writing embedded C, implementing communication protocols over CAN, and developing C#/.NET tools for controller programming and diagnostics.
 

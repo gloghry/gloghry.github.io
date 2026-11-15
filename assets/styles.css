@@ -48,6 +48,7 @@
 body { margin:0; background:var(--bg); color:var(--text); font-family:"Atkinson Hyperlegible Next",Arial,sans-serif; font-size:1.0625rem; line-height:1.75; overflow-wrap:break-word; }
 a { color:var(--accent); text-underline-offset:.24em; text-decoration-thickness:1px; }
 a:hover { text-decoration-thickness:2px; }
+.new-tab-icon { display:inline-block; margin-left:.2em; vertical-align:-.1em; }
 :focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
 .wrap { width:min(100% - 3rem, 58rem); margin-inline:auto; }
 .site-header { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; padding-block:2rem; }

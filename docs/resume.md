@@ -2,6 +2,17 @@
 
 Website issue #12; delivery tracker gloghry/Resume#21.
 
+## PDF download behavior
+
+Issue #77 makes the About and résumé PDF links open the stable `/resume.pdf`
+directly in a new tab, with an external-link icon and an accessible new-tab
+announcement. The PDF response and contents are unchanged. The browser's PDF
+viewer can be used to download or print the document; whether the browser opens
+its viewer or downloads the file depends on browser settings. The links use
+Jekyll's `relative_url` filter and honor deployment base paths.
+
+## Public PDF source
+
 Prepared from gloghry/Resume commit
 `e88424c5027653f51c76d06b7d91b7be80e64338` (PR #25), using `make public`.
 Only the explicit public PDF was copied. The readable page mirrors the same

@@ -167,6 +167,36 @@ async function auditBrowser(browserType) {
   const browser = await browserType.launch();
   try {
     await performanceChecks(browser, name);
+    for (const route of ['/about/', '/resume/']) {
+      for (const width of [390, 1440]) {
+        await scenario(name + ' PDF opens in new context ' + width + ' ' + route, async () => {
+          const context = await browser.newContext({ acceptDownloads: true, viewport: { width, height: 900 } });
+          try {
+            const page = await context.newPage();
+            await page.goto(base + route);
+            const link = page.locator('main a[href="' + basePath + '/resume.pdf"]');
+            assert.equal(await link.getAttribute('target'), '_blank');
+            assert((await link.getAttribute('rel')).split(/\s+/).includes('noopener'));
+            assert((await link.getAttribute('aria-label')).includes('opens in a new tab'));
+            assert.equal(await link.locator('svg.new-tab-icon').count(), 1);
+            await link.focus();
+            const [popup, response] = await Promise.all([
+              page.waitForEvent('popup'),
+              context.waitForEvent('response', response => response.url() === base + '/resume.pdf'),
+              page.keyboard.press('Enter'),
+            ]);
+            assert.equal(page.url(), base + route, 'Original page was replaced');
+            assert.equal(await popup.evaluate(() => window.opener), null);
+            assert.match(response.headers()['content-type'], /^application\/pdf(?:;|$)/i);
+            // Browser-native PDF viewers are not exposed as ordinary pages in
+            // Playwright, so the popup URL may stay blank or become an internal URL.
+            if (popup.url() !== base + '/resume.pdf') {
+              console.log(name + ' handed the PDF to browser-managed viewing; popup URL: ' + (popup.url() || '(not exposed)'));
+            }
+          } finally { await context.close(); }
+        });
+      }
+    }
     for (const theme of ['light', 'dark']) {
       const context = await browser.newContext({ colorScheme: theme });
       const page = await context.newPage();

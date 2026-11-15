@@ -10,7 +10,9 @@ It covers Home, About, Projects, Writing, Résumé, Copyright & credits, and 404
 
 Issue #64 adds compact-navigation checks in both themes: Enter/Space activation, expanded state, tab access to links, Escape with focus return, outside-click closing, link navigation, and resizing between compact and desktop headers. The open menu receives an accessibility scan and screenshot; enlarged-text checks also open the menu. Below 52rem the menu collapses when JavaScript is available; wider screens retain visible links. Without JavaScript, navigation links remain visible.
 
-Axe checks WCAG A/AA rules on all seven page types (including Copyright & credits) at the phone width in both themes. Automated checks do not prove full accessibility or replace testing with assistive technology and real devices.
+Issue #77 adds checks that the PDF links from About and Résumé open a separate browsing context at phone and desktop widths in Chromium and WebKit. They verify the original page stays open, the new page has no opener, and the response is a PDF. CI runs these at root and subpath URLs. Browser-native PDF viewers are not exposed as ordinary pages in Playwright, so their display and download controls need owner review on real devices.
+
+Axe checks WCAG A/AA rules on all seven page types at the phone width in both themes. Automated checks do not prove full accessibility or replace testing with assistive technology and real devices.
 
 CI uploads screenshots and report.json in the **browser-audit** artifact, retained for seven days. This is a downloadable verification artifact, not a hosted branch preview (#44).
 
