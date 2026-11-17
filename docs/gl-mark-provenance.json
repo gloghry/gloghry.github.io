@@ -16,18 +16,18 @@
       "sha256": "34e514e0c65acf7a465d3a1ea66a24f43c43f6dac8b3c799df3412478aabbec6"
     },
     "gl-mark.png": {
-      "bytes": 14704,
-      "sha256": "51434e72e85376aa526078e9de88e7191b68e8432cbdc59ef8c873bd9e7acab1"
+      "bytes": 16543,
+      "sha256": "dc59d785ca95d47e145e9cb3d1f3d6d45b2306184e96fdb8f5ac574c0f3d74a1"
     },
     "gl-mark.webp": {
-      "bytes": 4850,
-      "sha256": "096c397dbe5bb3e84fa619e21b2dad3b91a28de588d1b57c0b8d75d70cedd710"
+      "bytes": 5012,
+      "sha256": "9b8b01bcd98a5b71988fbecc4b6bd5a1efa63637c729e34b1843e5c01dbb432f"
     }
   },
   "height": 208,
-  "source_commit": "2fc91874a2e100ac3fde17df937dcd4951e2fd31",
+  "source_commit": "4c5218bc7fc0c0f8b33ac493d82d3e55ce0253bf",
   "source_directory": "generated/original/web",
-  "source_render_sha256": "071157a3c2939eb41440c78f5ec0c4036de84290d0b049df16a5b6f2a5955c34",
+  "source_render_sha256": "b104ac182d62ff2117ffc563a4e0046b202acb691cb263613484d8c78d79c536",
   "source_repository": "https://github.com/gloghry/icon",
   "variant": "original",
   "width": 128
