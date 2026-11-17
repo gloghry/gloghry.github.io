@@ -12,8 +12,8 @@
   "encoder": "Pillow 12.0.0",
   "files": {
     "favicon.svg": {
-      "bytes": 243,
-      "sha256": "fc9dfac04db9ff20603c401a4c49ad0f41fed62d3708daa763f590fd493d80a7"
+      "bytes": 236,
+      "sha256": "34e514e0c65acf7a465d3a1ea66a24f43c43f6dac8b3c799df3412478aabbec6"
     },
     "gl-mark.png": {
       "bytes": 14704,
@@ -25,7 +25,7 @@
     }
   },
   "height": 208,
-  "source_commit": "9d024ef98780051115336954fc6c0382a9d84c84",
+  "source_commit": "2fc91874a2e100ac3fde17df937dcd4951e2fd31",
   "source_directory": "generated/original/web",
   "source_render_sha256": "071157a3c2939eb41440c78f5ec0c4036de84290d0b049df16a5b6f2a5955c34",
   "source_repository": "https://github.com/gloghry/icon",

@@ -9,7 +9,7 @@ Codex implemented the procedural model, static exports and automated handoff.
 [gl-mark-provenance.json](gl-mark-provenance.json) records the public asset
 hashes, image dimensions, camera settings and immutable source identity.
 The source is [gloghry/icon](https://github.com/gloghry/icon), asset commit
-[`9d024ef98780051115336954fc6c0382a9d84c84`](https://github.com/gloghry/icon/commit/9d024ef98780051115336954fc6c0382a9d84c84),
+[`2fc91874a2e100ac3fde17df937dcd4951e2fd31`](https://github.com/gloghry/icon/commit/2fc91874a2e100ac3fde17df937dcd4951e2fd31),
 directory `generated/original/web`. This is the last commit changing the
 original generated bundle, rather than a later publisher-only workflow revision.
 It ties the reviewed files to the model/generator history and follows the
