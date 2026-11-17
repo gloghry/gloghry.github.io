@@ -1,5 +1,14 @@
 {
-  "blender": "4.5.3 LTS",
+  "camera": {
+    "azimuth_degrees": 41.066474578585115,
+    "elevation_degrees": 10.266492855655851,
+    "ortho_scale": 9.947062492370605,
+    "target": [
+      2.402557373046875,
+      1.7433109283447266,
+      3.594351291656494
+    ]
+  },
   "encoder": "Pillow 12.0.0",
   "files": {
     "favicon.svg": {
@@ -7,19 +16,17 @@
       "sha256": "fc9dfac04db9ff20603c401a4c49ad0f41fed62d3708daa763f590fd493d80a7"
     },
     "gl-mark.png": {
-      "bytes": 15401,
-      "sha256": "f41aa13ca7033b3cb0824c3a72a1728b7cc49b2ce81600d3488522773875dff6"
+      "bytes": 14704,
+      "sha256": "51434e72e85376aa526078e9de88e7191b68e8432cbdc59ef8c873bd9e7acab1"
     },
     "gl-mark.webp": {
-      "bytes": 4966,
-      "sha256": "0f22eb6261f3c6efc82a0241234cecb98241912013ab29d5e1e7e2bc0011b964"
+      "bytes": 4850,
+      "sha256": "096c397dbe5bb3e84fa619e21b2dad3b91a28de588d1b57c0b8d75d70cedd710"
     }
   },
   "height": 208,
-  "source_commit": "13223fe248db03a3f80d376c63a60251eb7df563",
-  "source_directory": "generated/original/web",
-  "source_render_sha256": "772b00f5258aafd9ee39b03db9919206edff1fc71fc6499e6d8de8487975fafd",
-  "source_repository": "https://github.com/gloghry/icon",
+  "source": "Offline GL asset pipeline; public content hashes identify this export",
+  "source_render_sha256": "071157a3c2939eb41440c78f5ec0c4036de84290d0b049df16a5b6f2a5955c34",
   "variant": "original",
   "width": 128
 }
