@@ -228,7 +228,14 @@ async function auditBrowser(browserType) {
               assert(image.box.height >= 44 && image.box.height <= 52);
               assert.match(await home.innerText(), /Garett Loghry/);
               const favicon = page.locator('link[rel="icon"]');
-              assert.equal(await favicon.getAttribute('href'), basePath + '/assets/images/gl/favicon.svg');
+              const faviconURL = new URL(await favicon.getAttribute('href'), page.url());
+              assert.equal(faviconURL.pathname, basePath + '/assets/images/gl/favicon.svg');
+              assert.match(faviconURL.searchParams.get('v') || '', /^\d+$/, 'Favicon URL needs a deployment version');
+              if (width === 320) {
+                const response = await page.request.get(faviconURL.href);
+                assert.equal(response.status(), 200, 'Versioned favicon must resolve');
+                assert.match(response.headers()['content-type'], /image\/svg\+xml/);
+              }
               if ([320, 390, 1440].includes(width)) {
                 await page.locator('.site-header').screenshot({
                   path: path.join(output, name + '-' + theme + '-' + width + '-header.png')
