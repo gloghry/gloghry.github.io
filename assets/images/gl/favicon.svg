@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <title>GL</title>
   <style>path{fill:#526478}@media(prefers-color-scheme:dark){path{fill:#b6c6da}}</style>
-  <path d="M4 3h18v4H8v12h10v-4h-5v-4h9v12l6-4v4l-6 4h-4v-4H4Z"/>
+  <path d="M3 2h18v4H7v10h10v-3h-6V9h10v17h8v4H17V20H3Z"/>
 </svg>
